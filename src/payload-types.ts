@@ -229,6 +229,27 @@ export interface Page {
             blockName?: string | null;
             blockType: 'preview';
           }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'postArchive';
+          }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamsOverview';
+          }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'compOverview';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -274,7 +295,7 @@ export interface Competition {
   date: string;
   location: string;
   time: string;
-  competitions?: (string | Team)[] | null;
+  teams?: (string | Team)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -494,6 +515,30 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        postArchive?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamsOverview?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        compOverview?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -522,7 +567,7 @@ export interface CompetitionsSelect<T extends boolean = true> {
   date?: T;
   location?: T;
   time?: T;
-  competitions?: T;
+  teams?: T;
   updatedAt?: T;
   createdAt?: T;
 }

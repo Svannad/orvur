@@ -1,5 +1,8 @@
+import CompBlock from '@/blocks/CompBlock';
 import { HeroBlock } from '@/blocks/HeroBlock';
+import { PostArchiveBlock } from '@/blocks/PostArchiveBlock';
 import { PreviewBlock } from '@/blocks/PreviewBlock';
+import TeamsBlock from '@/blocks/TeamsBlock';
 import { CollectionConfig } from 'payload';
 
 export const Pages: CollectionConfig = {
@@ -18,7 +21,7 @@ export const Pages: CollectionConfig = {
     {
         name: 'content',
         type: 'blocks',
-        blocks: [HeroBlock, PreviewBlock],
+        blocks: [HeroBlock, PreviewBlock, PostArchiveBlock, TeamsBlock, CompBlock],
         required: false,
     }
   ],

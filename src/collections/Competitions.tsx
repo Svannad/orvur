@@ -29,7 +29,7 @@ export const Competitions: CollectionConfig = {
       required: true,
     },
     {
-      name: 'competitions',
+      name: 'teams',
       type: 'relationship',
       relationTo: 'teams',
       hasMany: true,

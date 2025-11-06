@@ -7,9 +7,9 @@ import './styles.css'
 import HeroBlock from './components/HeroBlock'
 import { Page } from '@/payload-types'
 import PreviewBlock from './components/PreviewBlock'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import PostArchiveBlock from './components/PostArchiveBlock'
+import TeamsBlock from './components/TeamsBlock'
+import CompBlock from './components/CompBlock'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -39,6 +39,12 @@ export default async function HomePage() {
         return <HeroBlock block={block} key={block.id}/>
       case 'preview':
         return <PreviewBlock block={block} key={block.id}/>
+      case 'postArchive':
+        return <PostArchiveBlock block={block} key={block.id}/>
+      case 'teamsOverview':
+        return <TeamsBlock block={block} key={block.id}/>
+      case 'compOverview':
+        return <CompBlock block={block} key={block.id}/>
       default:
         return null
     }
