@@ -73,6 +73,7 @@ export interface Config {
     posts: Post;
     competitions: Competition;
     teams: Team;
+    faq: Faq;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     competitions: CompetitionsSelect<false> | CompetitionsSelect<true>;
     teams: TeamsSelect<false> | TeamsSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -226,9 +228,6 @@ export interface Page {
               text?: string | null;
               link?: string | null;
             };
-            /**
-             * Select a post manually (only used in manual mode).
-             */
             post?: (string | null) | Post;
             id?: string | null;
             blockName?: string | null;
@@ -351,6 +350,35 @@ export interface Team {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  link?: {
+    text?: string | null;
+    link?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -396,6 +424,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'teams';
         value: string | Team;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: string | Faq;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -591,6 +623,22 @@ export interface TeamsSelect<T extends boolean = true> {
   prize?: T;
   expirationDate?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  link?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

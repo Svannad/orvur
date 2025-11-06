@@ -17,16 +17,25 @@ export const PreviewBlock: Block = {
       name: 'maintitle',
       type: 'text',
       required: false,
+      admin: {
+        condition: (data, siblingData) => (data?.mode ?? siblingData?.mode) === 'manual',
+      },
     },
     {
       name: 'subtitle',
       type: 'text',
       required: false,
+      admin: {
+        condition: (data, siblingData) => (data?.mode ?? siblingData?.mode) === 'manual',
+      },
     },
     {
       name: 'description',
       type: 'richText',
       required: false,
+      admin: {
+        condition: (data, siblingData) => (data?.mode ?? siblingData?.mode) === 'manual',
+      },
     },
     {
       name: 'image',
@@ -56,8 +65,7 @@ export const PreviewBlock: Block = {
       relationTo: 'posts',
       required: false,
       admin: {
-        condition: (data, siblingData) => (data?.mode ?? siblingData?.mode) === 'manual',
-        description: 'Select a post manually (only used in manual mode).',
+        condition: () => false,
       },
     },
   ],

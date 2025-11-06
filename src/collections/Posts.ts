@@ -37,6 +37,9 @@ export const Posts: CollectionConfig = {
       required: false,
     }
   ],
+  admin: {
+    useAsTitle: 'maintitle'
+  },
 };
 
 export default Posts;
