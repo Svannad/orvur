@@ -203,10 +203,10 @@ export interface Page {
             blockType: 'hero';
           }
         | {
-            image?: (string | null) | Media;
-            maintitle: string;
+            mode: 'auto' | 'manual';
+            maintitle?: string | null;
             subtitle?: string | null;
-            description: {
+            description?: {
               root: {
                 type: string;
                 children: {
@@ -220,11 +220,16 @@ export interface Page {
                 version: number;
               };
               [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
             };
-            cta: {
-              text: string;
-              link: string;
-            };
+            /**
+             * Select a post manually (only used in manual mode).
+             */
+            post?: (string | null) | Post;
             id?: string | null;
             blockName?: string | null;
             blockType: 'preview';
@@ -502,16 +507,18 @@ export interface PagesSelect<T extends boolean = true> {
         preview?:
           | T
           | {
-              image?: T;
+              mode?: T;
               maintitle?: T;
               subtitle?: T;
               description?: T;
+              image?: T;
               cta?:
                 | T
                 | {
                     text?: T;
                     link?: T;
                   };
+              post?: T;
               id?: T;
               blockName?: T;
             };
