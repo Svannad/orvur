@@ -6,6 +6,7 @@ import config from '@/payload.config'
 import './styles.css'
 import HeroBlock from './components/HeroBlock'
 import { Page } from '@/payload-types'
+import PreviewBlock from './components/PreviewBlock'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -33,6 +34,8 @@ export default async function HomePage() {
     switch (block.blockType) {
       case 'hero':
         return <HeroBlock block={block} key={block.id}/>
+      case 'preview':
+        return <PreviewBlock block={block} key={block.id}/>
       default:
         return null
     }
@@ -44,6 +47,7 @@ export default async function HomePage() {
     <div>
       {page.content?.map((block) => renderBlocks(block))}
     </div>
+    
   </div>
 )
 

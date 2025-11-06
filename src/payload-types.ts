@@ -169,32 +169,61 @@ export interface Page {
   title: string;
   slug: string;
   content?:
-    | {
-        maintitle: string;
-        subtitle?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
+    | (
+        | {
+            maintitle: string;
+            subtitle?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
               [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        image?: (string | null) | Media;
-        ctaText: {
-          text: string;
-          link: string;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'hero';
-      }[]
+            } | null;
+            image?: (string | null) | Media;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            image?: (string | null) | Media;
+            maintitle: string;
+            subtitle?: string | null;
+            description: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            cta: {
+              text: string;
+              link: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'preview';
+          }
+      )[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -333,7 +362,23 @@ export interface PagesSelect<T extends boolean = true> {
               maintitle?: T;
               subtitle?: T;
               image?: T;
-              ctaText?:
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        preview?:
+          | T
+          | {
+              image?: T;
+              maintitle?: T;
+              subtitle?: T;
+              description?: T;
+              cta?:
                 | T
                 | {
                     text?: T;

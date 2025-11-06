@@ -11,9 +11,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/abf6uhe.css"></link>
+      </head>
       <body>
         <main>{children}</main>
-      </body>
+      </body> 
     </html>
   )
 }

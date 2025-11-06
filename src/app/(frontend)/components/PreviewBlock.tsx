@@ -2,13 +2,14 @@ import { Page } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 
-type HeroProps = Extract<Page['content'][0], { blockType: 'hero' }>
+type PreviewProps = Extract<Page['content'][0], { blockType: 'hero' }>
 
-export default function HeroBlock({ block }: { block: HeroProps }) {
+export default function PreviewBlock({ block }: { block: PreviewProps }) {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline font-sans">{block.maintitle}</h1>
-      <RichText data={block.subtitle} />
+      <h1>{block.maintitle}</h1>
+      <h2>{block.subtitle}</h2>
+      <RichText data={block.description} />
       {block.image && (
         <Image
           src={block.image.url}

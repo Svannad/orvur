@@ -20,19 +20,19 @@ export const HeroBlock: Block = {
       required: false,
     },
     {
-      name: 'ctaText',
+      name: 'cta',
       type: 'group',
       required: false,
       fields: [
         {
           name: 'text',
           type: 'text',
-          required: true,
+          required: false,
         },
         {
           name: 'link',
           type: 'text',
-          required: true,
+          required: false,
         },
       ],
     },
