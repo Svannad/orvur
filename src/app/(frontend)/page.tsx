@@ -7,6 +7,9 @@ import './styles.css'
 import HeroBlock from './components/HeroBlock'
 import { Page } from '@/payload-types'
 import PreviewBlock from './components/PreviewBlock'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -47,7 +50,6 @@ export default async function HomePage() {
     <div>
       {page.content?.map((block) => renderBlocks(block))}
     </div>
-    
   </div>
 )
 
