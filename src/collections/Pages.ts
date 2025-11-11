@@ -1,13 +1,16 @@
-import CompBlock from '@/blocks/CompBlock';
-import { HeroBlock } from '@/blocks/HeroBlock';
-import { PostArchiveBlock } from '@/blocks/PostArchiveBlock';
-import { PostPreviewBlock } from '@/blocks/PostPreviewBlock';
-import { PreviewBlock } from '@/blocks/PreviewBlock';
-import TeamsBlock from '@/blocks/TeamsBlock';
-import { CollectionConfig } from 'payload';
+import CompBlock from '@/blocks/CompBlock'
+import { HeroBlock } from '@/blocks/HeroBlock'
+import { PostArchiveBlock } from '@/blocks/PostArchiveBlock'
+import { PostPreviewBlock } from '@/blocks/PostPreviewBlock'
+import { PreviewBlock } from '@/blocks/PreviewBlock'
+import TeamsBlock from '@/blocks/TeamsBlock'
+import { CollectionConfig } from 'payload'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       name: 'title',
@@ -15,17 +18,20 @@ export const Pages: CollectionConfig = {
       required: true,
     },
     {
-        name: 'slug',
-        type: 'text',
-        required: true,
+      name: 'slug',
+      type: 'text',
+      required: true,
     },
     {
-        name: 'content',
-        type: 'blocks',
-        blocks: [HeroBlock, PreviewBlock, PostArchiveBlock, TeamsBlock, CompBlock, PostPreviewBlock],
-        required: false,
-    }
+      name: 'content',
+      type: 'blocks',
+      blocks: [HeroBlock, PreviewBlock, PostArchiveBlock, TeamsBlock, CompBlock, PostPreviewBlock],
+      required: false,
+    },
   ],
-};
+  admin: {
+    useAsTitle: 'title',
+  },
+}
 
-export default Pages;
+export default Pages
