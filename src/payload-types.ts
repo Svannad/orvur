@@ -254,6 +254,17 @@ export interface Page {
             blockName?: string | null;
             blockType: 'compOverview';
           }
+        | {
+            maintitle: string;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
+            };
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'postPreview';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -574,6 +585,20 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        postPreview?:
+          | T
+          | {
+              maintitle?: T;
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
               limit?: T;
               id?: T;
               blockName?: T;

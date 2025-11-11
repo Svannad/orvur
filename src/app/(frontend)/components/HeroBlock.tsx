@@ -6,18 +6,40 @@ type HeroProps = Extract<Page['content'][0], { blockType: 'hero' }>
 
 export default function HeroBlock({ block }: { block: HeroProps }) {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline font-sans">{block.maintitle}</h1>
-      <RichText data={block.subtitle} />
+    <section className="relative w-full h-[85vh] flex items-end text-white overflow-hidden">
+      {/* Background Image */}
       {block.image && (
         <Image
           src={block.image.url}
           alt={block.image.alt || 'Hero Image'}
-          width={500}
-          height={300}
+          fill
+          className="object-cover"
+          priority
         />
       )}
-      {block.cta && <a href={block.cta.link}>{block.cta.text}</a>}
-    </div>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent"></div>
+
+      {/* Text + Button Container */}
+      <div className="relative z-10 p-8 max-w-2xl">
+        <h1 className="text-4xl font-bold italic mb-4">
+          {block.maintitle}
+        </h1>
+
+        <div className="text-xl mb-6">
+          <RichText data={block.subtitle} />
+        </div>
+
+        {block.cta && (
+          <a
+            href={block.cta.link}
+            className="inline-block bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-200 transition"
+          >
+            {block.cta.text}
+          </a>
+        )}
+      </div>
+    </section>
   )
 }

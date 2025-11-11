@@ -10,6 +10,7 @@ import PreviewBlock from './components/PreviewBlock'
 import PostArchiveBlock from './components/PostArchiveBlock'
 import TeamsBlock from './components/TeamsBlock'
 import CompBlock from './components/CompBlock'
+import PostPreviewBlock from './components/PostPreviewBlock'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -45,6 +46,8 @@ export default async function HomePage() {
         return <TeamsBlock block={block} key={block.id}/>
       case 'compOverview':
         return <CompBlock block={block} key={block.id}/>
+      case 'postPreview':
+        return <PostPreviewBlock block={block} key={block.id}/>
       default:
         return null
     }
@@ -52,7 +55,6 @@ export default async function HomePage() {
 
   return (
   <div>
-    <h1>{page.title}</h1>
     <div>
       {page.content?.map((block) => renderBlocks(block))}
     </div>

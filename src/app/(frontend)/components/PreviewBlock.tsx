@@ -25,38 +25,71 @@ export default function PreviewBlock({ block }: { block: PreviewProps }) {
 
   if (!post && block.mode === 'auto') return null
 
+  const image = block.mode === 'manual' ? block.image : post?.heroImage
+
+  const createdDate = post?.createdAt
+    ? new Date(post.createdAt).toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null
+
+
   return (
-    <div>
-      <h1>{block.maintitle || post?.maintitle}</h1>
-      <h2>{block.subtitle || post?.subtitle}</h2>
-
-      <RichText data={block.description || post?.content} />
-
-      {block.mode === 'manual' ? (
-        block.image && (
+    <section className="flex items-center gap-12 py-12 px-16 min-h-[50vh]">
+      {/* Image Section */}
+      {image && (
+        <div className="relative w-1/2 aspect-4/3 overflow-hidden">
           <Image
-            src={block.image.url}
-            alt={block.image.alt || 'Preview Image'}
-            width={500}
-            height={300}
+            src={image.url}
+            alt={image.alt || 'Preview Image'}
+            fill
+            className="object-cover"
           />
-        )
-      ) : (
-        post?.heroImage && (
-          <Image
-            src={post.heroImage.url}
-            alt={post.heroImage.alt || 'Post Image'}
-            width={500}
-            height={300}
-          />
-        )
+        </div>
       )}
 
-      {block.mode === 'manual' ? (
-        block.cta && <a href={block.cta.link}>{block.cta.text}</a>
-      ) : (
-        <a href={`/posts/${post?.id}`}>Read more</a>
-      )}
-    </div>
+      {/* Text Section */}
+      <div className="flex flex-col justify-center w-1/2 space-y-12">
+      <div className='space-y-6'>
+        <h1 className="text-4xl italic font-bold text-black">
+          {block.maintitle || post?.maintitle}
+        </h1>
+
+        <h2 className="text-2xl text-black font-bold">
+          {block.subtitle || post?.subtitle}
+        </h2>
+
+         {createdDate && (
+          <p className="text-black/50">
+            {createdDate}
+          </p>
+        )}
+        </div>
+
+        <div className="text-black leading-relaxed text-xl">
+          <RichText data={block.description || post?.content} />
+        </div>
+
+        {block.mode === 'manual' ? (
+          block.cta && (
+            <a
+              href={block.cta.link}
+              className="inline-block bg-black text-white px-6 py-3 rounded-md font-semibold w-fit hover:bg-gray-800 transition"
+            >
+              {block.cta.text}
+            </a>
+          )
+        ) : (
+          <a
+            href={`/posts/${post?.id}`}
+            className="inline-block bg-black text-white px-6 py-3 rounded-md font-semibold w-fit hover:bg-gray-800 transition"
+          >
+            Read more
+          </a>
+        )}
+      </div>
+    </section>
   )
 }
