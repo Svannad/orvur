@@ -1,5 +1,6 @@
 export const fetchTeams = async (limit?: number) => {
   const url = new URL(`http://localhost:3000/api/teams`)
+  url.searchParams.append('sort', 'createdAt');
   if (limit) url.searchParams.append('limit', limit.toString())
 
   const res = await fetch(url.toString(), { cache: 'no-store' })
