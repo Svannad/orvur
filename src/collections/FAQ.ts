@@ -1,16 +1,19 @@
-import { CollectionConfig } from "payload";
+import { CollectionConfig } from 'payload'
 
 const FAQ: CollectionConfig = {
-  slug: "faq",
+  slug: 'faq',
+  access: {
+    read: () => true,
+  },
   fields: [
     {
-      name: "question",
-      type: "text",
+      name: 'question',
+      type: 'text',
       required: true,
     },
     {
-      name: "answer",
-      type: "richText",
+      name: 'answer',
+      type: 'richText',
       required: true,
     },
     {
@@ -31,6 +34,6 @@ const FAQ: CollectionConfig = {
       ],
     },
   ],
-};
+}
 
-export default FAQ;
+export default FAQ

@@ -1,45 +1,54 @@
-import { CollectionConfig } from "payload";
+import { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
-  slug: "posts",
+  slug: 'posts',
+  access: {
+    read: () => true,
+  },
   fields: [
     {
-      name: "maintitle",
-      type: "text",
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+    },
+    {
+      name: 'maintitle',
+      type: 'text',
       required: true,
     },
     {
-      name: "subtitle",
-      type: "text",
+      name: 'subtitle',
+      type: 'text',
       required: true,
     },
     {
-      name: "heroImage",
-      type: "upload",
+      name: 'heroImage',
+      type: 'upload',
       relationTo: 'media',
       required: true,
     },
     {
-      name: "author",
-      type: "text",
+      name: 'author',
+      type: 'text',
       required: true,
     },
     {
-      name: "content",
-      type: "richText",
+      name: 'content',
+      type: 'richText',
       required: true,
     },
     {
-      name: "imageGallery",
-      type: "upload",
+      name: 'imageGallery',
+      type: 'upload',
       relationTo: 'media',
       hasMany: true,
       required: false,
-    }
+    },
   ],
   admin: {
-    useAsTitle: 'maintitle'
+    useAsTitle: 'maintitle',
   },
-};
+}
 
-export default Posts;
+export default Posts

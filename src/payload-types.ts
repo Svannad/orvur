@@ -280,6 +280,7 @@ export interface Page {
  */
 export interface Post {
   id: string;
+  slug: string;
   maintitle: string;
   subtitle: string;
   heroImage: string | Media;
@@ -616,6 +617,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  slug?: T;
   maintitle?: T;
   subtitle?: T;
   heroImage?: T;

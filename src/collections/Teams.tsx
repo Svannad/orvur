@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 export const Teams: CollectionConfig = {
   slug: 'teams',
+  access: {
+    read: () => true,
+  },
   fields: [
     { name: 'image', type: 'upload', relationTo: 'media', required: true },
     { name: 'title', type: 'text', required: true },
@@ -25,7 +28,7 @@ export const Teams: CollectionConfig = {
     },
   ],
   admin: {
-    useAsTitle: 'title'
+    useAsTitle: 'title',
   },
   hooks: {
     beforeChange: [

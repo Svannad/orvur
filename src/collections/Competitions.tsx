@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 export const Competitions: CollectionConfig = {
   slug: 'competitions',
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       name: 'title',
@@ -37,4 +40,4 @@ export const Competitions: CollectionConfig = {
   ],
 }
 
-export default Competitions;
+export default Competitions
