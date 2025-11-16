@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
+import { Search } from 'lucide-react'
 
 type PostArchiveProps = Extract<Page['content'][0], { blockType: 'postsArchive' }>
 
@@ -15,7 +16,27 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
   }, [block.limit])
 
   return (
-    <section className="py-12 px-16">
+    <section className="py-41 px-32">
+      {/* HEADER ROW */}
+      <div className="flex items-center justify-between mb-8">
+        {/* Left title */}
+        {block.maintitle && <h2 className="text-4xl italic font-bold">{block.maintitle}</h2>}
+
+        {/* Search input */}
+        <div className="flex bg-blue items-center justify-center cursor-pointer">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="border border-blue px-4 py-2 w-64 bg-white"
+          />
+          <Search color="white" size={20} className="mx-3" />
+        </div>
+      </div>
+
+      {/* Gold line */}
+      <div className="w-full h-0.5 bg-yellow mb-12"></div>
+
+      {/* POSTS GRID */}
       <div className="grid grid-cols-3 gap-8">
         {posts.map((post) => (
           <a
