@@ -17,47 +17,52 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
   }, [block.limit])
 
   return (
-    <section className="py-12 px-8 max-w-7xl mx-auto">
-      {block.maintitle && (
-        <h2 className="text-3xl font-bold text-center mb-10">{block.maintitle}</h2>
-      )}
+    <section className="px-41 py-32">
+      <div className="flex gap-6 justify-center items-stretch overflow-hidden ">
+        {teams.map((team, index) => {
+          const expanded = hovered === index || (hovered === null && index === 0)
 
-      <div className="flex gap-6 justify-center items-stretch overflow-hidden">
-        {teams.map((team, index) => (
-          <a
-            key={team.id}
-            href={`/teams/${team.id}`}
-                    onMouseEnter={() => setHovered(index)}
+          return (
+            <a
+              key={team.id}
+              href={`/teams/${team.id}`}
+              onMouseEnter={() => setHovered(index)}
               onMouseLeave={() => setHovered(null)}
-              className={`team-item relative h-72 rounded-xl overflow-hidden shadow-lg cursor-pointer transition-all duration-500 ease-in-out ${hovered === index ? 'is-hovered' : ''}`}
-          >
-              {/* Background image or fallback */}
+              className={`team-item relative h-[700px] overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
+                expanded ? 'is-hovered' : ''
+              }`}
+            >
+              {/* Image */}
               {team.image?.url ? (
-                <Image
-                  src={team.image.url}
-                  alt={team.title}
-                  fill
-                  className="object-cover brightness-75"
-                />
+                <Image src={team.image.url} alt={team.title} fill className="object-cover" />
               ) : (
-                <div className="absolute inset-0 bg-slate-100" />
+                <div className="absolute inset-0 bg-black/50" />
               )}
 
-              {/* gradient overlay */}
+              {/* gradient */}
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent z-10"></div>
 
               {/* content */}
               <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
                 <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
-                {team.subDescription && (
-                  <div className="text-sm text-gray-200">
+
+                {/* Only show subDescription when expanded */}
+                {expanded && team.subDescription && (
+                  <div className="text-sm text-white transition-opacity duration-300">
                     <RichText data={team.subDescription} />
                   </div>
                 )}
               </div>
 
-          </a>
-        ))}
+              {/* Status Pill */}
+              {team.status && (
+                <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm">
+                  Application: {team.status}
+                </div>
+              )}
+            </a>
+          )
+        })}
       </div>
     </section>
   )
