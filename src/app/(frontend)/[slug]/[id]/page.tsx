@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { slug: string; id: str
 
   // For posts we have maintitle/subtitle, for teams maybe title/description
   const title = data.maintitle || data.title
-  const subtitle = data.subtitle
+  const subtitle = data.subtitle 
   const author = data.author
   const heroImage = data.heroImage || data.image
   const content = data.content || data.mainDescription

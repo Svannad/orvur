@@ -1,10 +1,10 @@
-import CompBlock from "./CompBlock"
-import HeroBlock from "./HeroBlock"
-import PostArchiveBlock from "./PostArchiveBlock"
-import PostPreviewBlock from "./PostPreviewBlock"
-import PreviewBlock from "./PreviewBlock"
-import TeamsBlock from "./TeamsBlock"
-
+import AboutBlock from './AboutBlock'
+import CompBlock from './CompBlock'
+import HeroBlock from './HeroBlock'
+import PostArchiveBlock from './PostArchiveBlock'
+import PostPreviewBlock from './PostPreviewBlock'
+import PreviewBlock from './PreviewBlock'
+import TeamsBlock from './TeamsBlock'
 
 const blockComponents: any = {
   hero: HeroBlock,
@@ -13,6 +13,7 @@ const blockComponents: any = {
   compBlock: CompBlock,
   postArchive: PostArchiveBlock,
   postPreview: PostPreviewBlock,
+  about: AboutBlock,
 }
 
 export default function RenderBlocks({ blocks }: { blocks: any[] }) {

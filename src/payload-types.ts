@@ -269,6 +269,29 @@ export interface Page {
             blockName?: string | null;
             blockType: 'postPreview';
           }
+        | {
+            maintitle: string;
+            subtitle: string;
+            heroImage: string | Media;
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -604,6 +627,16 @@ export interface PagesSelect<T extends boolean = true> {
                     link?: T;
                   };
               limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        about?:
+          | T
+          | {
+              maintitle?: T;
+              subtitle?: T;
+              heroImage?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };
