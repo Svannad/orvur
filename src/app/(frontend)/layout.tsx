@@ -15,7 +15,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/abf6uhe.css"></link>
       </head>
-      <body className='bg-white'>
+      <body className='bg-white relative'>
         <Navbar />
         <main>{children}</main>
       </body> 
