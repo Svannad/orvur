@@ -3,6 +3,7 @@ import { fetchPostById } from '../../utils/fetchPosts'
 import { fetchTeamById } from '../../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import SplitTabs from '@/components/SplitTabs/page'
 
 export default async function Page({ params }: { params: { slug: string; id: string } }) {
   const { slug, id } = params
@@ -22,7 +23,7 @@ export default async function Page({ params }: { params: { slug: string; id: str
 
   // For posts we have maintitle/subtitle, for teams maybe title/description
   const title = data.maintitle || data.title
-  const subtitle = data.subtitle 
+  const subtitle = data.subtitle
   const author = data.author
   const heroImage = data.heroImage || data.image
   const content = data.content || data.mainDescription
@@ -52,20 +53,7 @@ export default async function Page({ params }: { params: { slug: string; id: str
           />
         </div>
       )}
-      <div className="grid grid-cols-[1fr_auto_200px] gap-6 mb-12 items-start pr-41 min-h-[50vh]">
-        {/* Left: Content */}
-        {content && (
-          <div className="prose prose-lg">
-            <RichText data={content} />
-          </div>
-        )}
-
-        {/* Middle: Vertical gold line */}
-        <div className="w-0.5 bg-yellow h-full mx-auto" />
-
-        {/* Right: Author */}
-        {author && <p className="text-sm text-black min-w-[250px]">By {author}</p>}
-      </div>
+      <SplitTabs author={author} content={content} />
 
       {/* Image Gallery */}
       {gallery.length > 0 && (

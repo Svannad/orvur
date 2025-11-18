@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Page } from '@/payload-types'
+import SplitTabs from '@/components/SplitTabs/page'
 
 type AboutProps = Extract<Page['content'][0], { blockType: 'about' }>
 
@@ -29,17 +30,7 @@ export default function AboutBlock({ block }: { block: AboutProps }) {
           />
         </div>
       )}
-      <div className="grid grid-cols-[1fr_auto_200px] gap-6 mb-12 items-start pr-41 min-h-[50vh]">
-        {/* Left: Content */}
-        {block.content && (
-          <div className="prose prose-lg">
-            <RichText data={block.content} />
-          </div>
-        )}
-
-        {/* Middle: Vertical gold line */}
-        <div className="w-0.5 bg-yellow h-full mr-[250px]" />
-      </div>
+    <SplitTabs content={block.content} />
     </article>
   )
 }
