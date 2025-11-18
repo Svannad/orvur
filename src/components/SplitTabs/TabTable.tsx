@@ -13,7 +13,22 @@ import {
   TableCell,
 } from "@/components/ui/table"
 
-import { Combobox } from "../ComboBox"
+import { Button } from "@/components/ui/button"
+import { Check, ChevronsUpDown } from "lucide-react"
+import { cn } from "@/lib/utils"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function CompetitionTableWithFilter() {
   const pathname = usePathname()
@@ -70,7 +85,66 @@ export default function CompetitionTableWithFilter() {
     <div className="mt-6 space-y-6">
       <h2 className="text-2xl font-semibold">Competitions</h2>
 
-    <Combobox teams={allTeams.map((team) => ({ label: team, value: team }))} />
+      {/* TEAM COMBOBOX */}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[250px] justify-between"
+          >
+            {selectedTeam || "Filter by team..."}
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent className="w-[250px] p-0">
+          <Command>
+            <CommandInput placeholder="Search team..." className="h-9" />
+            <CommandList>
+              <CommandEmpty>No team found.</CommandEmpty>
+
+              <CommandGroup>
+                <CommandItem
+                  value=""
+                  onSelect={() => {
+                    setSelectedTeam("")
+                    setOpen(false)
+                  }}
+                >
+                  All Teams
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      selectedTeam === "" ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+
+                {allTeams.map((team) => (
+                  <CommandItem
+                    key={team}
+                    value={team}
+                    onSelect={(val) => {
+                      setSelectedTeam(val === selectedTeam ? "" : val)
+                      setOpen(false)
+                    }}
+                  >
+                    {team}
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        selectedTeam === team ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
 
       {/* TABLE */}
       <Table>
