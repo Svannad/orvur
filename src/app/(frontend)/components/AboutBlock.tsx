@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Page } from '@/payload-types'
 import SplitTabs from '@/components/SplitTabs/page'
 
