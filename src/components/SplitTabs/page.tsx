@@ -27,10 +27,10 @@ export default function SplitTabs({ author, content }: { author?: string; conten
 
   return (
     <Tabs defaultValue={defaultTab} className="w-full">
-      <div className="grid grid-cols-[1fr_auto_250px] gap-8 items-start min-h-[50vh]">
+      <div className="grid grid-cols-[1fr_auto_300px] gap-8 items-start min-h-[50vh]">
 
         {/* LEFT CONTENT AREA */}
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg max-w-none pt-8">
           {allowedTabs.content && (
             <TabsContent value="content">
               <TabContent content={content} />
@@ -66,38 +66,38 @@ export default function SplitTabs({ author, content }: { author?: string; conten
         <div className="w-0.5 bg-yellow h-full mx-auto" />
 
         {/* RIGHT SIDE TABS */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pt-8">
           <TabsList className="flex flex-col gap-2 bg-transparent p-0 h-auto">
 
             {allowedTabs.content && (
               <TabsTrigger
                 value="content"
-                className="w-full justify-start border-b border-black/20"
+                className="w-full justify-start"
               >
-                {isPost && author ? author : "Content"}
+                {isPost && author ?  author : "About"}
               </TabsTrigger>
             )}
 
             {allowedTabs.form && (
-              <TabsTrigger value="form" className="w-full justify-start border-b border-black/20">
-                Contact
+              <TabsTrigger value="form" className="w-full justify-start">
+                Application Form
               </TabsTrigger>
             )}
 
             {allowedTabs.location && (
-              <TabsTrigger value="location" className="w-full justify-start border-b border-black/20">
+              <TabsTrigger value="location" className="w-full justify-start ">
                 Location
               </TabsTrigger>
             )}
 
             {allowedTabs.table && (
-              <TabsTrigger value="table" className="w-full justify-start border-b border-black/20">
-                Opening Hours
+              <TabsTrigger value="table" className="w-full justify-start">
+                Competitions
               </TabsTrigger>
             )}
 
             {allowedTabs.accordion && (
-              <TabsTrigger value="accordion" className="w-full justify-start border-b border-black/20">
+              <TabsTrigger value="accordion" className="w-full justify-start ">
                 FAQ
               </TabsTrigger>
             )}

@@ -30,21 +30,21 @@ export default async function Page({ params }: { params: { slug: string; id: str
   const gallery = data.imageGallery || []
 
   return (
-    <article className="py-64 pl-41">
-      <header className="mb-12 grid grid-cols-[1fr_auto] pt-20 items-start gap-6 pr-41">
+    <article className="py-28 pl-41">
+      <header className=" mb-5 grid grid-cols-[1fr_auto] pt-20 items-start gap-6 pr-41">
         {/* Title + Subtitle */}
-        <div>
+        <div className="pt-8 pb-3">
           <h1 className="text-4xl font-bold mb-4 italic">{title}</h1>
           {subtitle && <p className="text-2xl text-black">{subtitle}</p>}
         </div>
 
         {/* Vertical gold line */}
-        <div className="w-0.5 bg-yellow h-full mr-[250px]" />
+        <div className="w-0.5 bg-yellow h-full mr-[158px]" />
       </header>
 
       {/* Hero Image */}
       {heroImage?.url && (
-        <div className="relative w-full aspect-video mb-10 overflow-hidden h-[750px]">
+        <div className="relative w-full aspect-video mb-5 overflow-hidden h-[650px]">
           <Image
             src={heroImage.url}
             alt={heroImage.alt || title}
