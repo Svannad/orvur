@@ -15,6 +15,7 @@ import { Competitions } from './collections/Competitions'
 import { Teams } from './collections/Teams'
 import FAQ from './collections/FAQ'
 import { Navigation } from './collections/Navigation'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,5 +41,6 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    formBuilderPlugin({})
   ],
 })
