@@ -41,6 +41,10 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
-    formBuilderPlugin({})
+    formBuilderPlugin({
+      fields: {
+        submissions: true,
+      }
+    })
   ],
 })
