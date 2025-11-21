@@ -296,6 +296,12 @@ export interface Page {
             blockName?: string | null;
             blockType: 'about';
           }
+        | {
+            title: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'submit';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -840,6 +846,13 @@ export interface PagesSelect<T extends boolean = true> {
               subtitle?: T;
               heroImage?: T;
               content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        submit?:
+          | T
+          | {
+              title?: T;
               id?: T;
               blockName?: T;
             };
