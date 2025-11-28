@@ -30,20 +30,23 @@ export const Teams: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+
   hooks: {
-    beforeChange: [
-      ({ data }) => {
+    afterRead: [
+      ({ doc }) => {
+        if (!doc) return doc
+
         const now = new Date()
-        const expiration = new Date(data.expirationDate)
+        const expiration = new Date(doc.expirationDate)
 
-        if (expiration < now) {
-          data.status = 'closed'
+        return {
+          ...doc,
+          status: expiration < now ? 'closed' : 'open',
         }
-
-        return data
       },
     ],
   },
 }
+
 
 export default Teams
