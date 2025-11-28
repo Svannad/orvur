@@ -17,8 +17,9 @@ import FAQ from './collections/FAQ'
 import { Navigation } from './collections/Navigation'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
-// ✅ IMPORT EMAIL ADAPTER
+// Email adapter and hooks
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { updateMail } from './app/(frontend)/utils/updateMail'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -63,9 +64,22 @@ export default buildConfig({
     payloadCloudPlugin(),
 
     formBuilderPlugin({
-      fields: {
-        submissions: true,
+      formSubmissionOverrides: {
+        fields: [
+          {
+            name: 'status',
+            type: 'select',
+            defaultValue: 'waiting',
+            options: [
+              { label: 'Main List', value: 'main' },
+              { label: 'Waiting List', value: 'waiting' },
+            ],
+          },
+        ],
+        hooks: {
+          afterDelete: [updateMail],
+        },
       },
-    }),
+    } as any),
   ],
 })
