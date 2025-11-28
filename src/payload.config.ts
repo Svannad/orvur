@@ -17,6 +17,9 @@ import FAQ from './collections/FAQ'
 import { Navigation } from './collections/Navigation'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
+// ✅ IMPORT EMAIL ADAPTER
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -27,24 +30,42 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+
   globals: [Navigation],
   collections: [Users, Media, Pages, Posts, Competitions, Teams, FAQ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_FROM || 'no-reply@site.com',
+    defaultFromName: 'Ørvur',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
+
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
+
   sharp,
+
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+
     formBuilderPlugin({
       fields: {
         submissions: true,
-      }
-    })
+      },
+    }),
   ],
 })
