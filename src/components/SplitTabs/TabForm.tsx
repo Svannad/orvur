@@ -3,6 +3,8 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 
 type FormState = {
   loading: boolean
@@ -29,9 +31,7 @@ export default function TabForm() {
 
         setTeam(data)
 
-        const isExpired =
-          data.expirationDate &&
-          new Date(data.expirationDate) < new Date()
+        const isExpired = data.expirationDate && new Date(data.expirationDate) < new Date()
 
         setTeamClosed(isExpired || data.status === 'closed')
       } catch (err) {
@@ -90,7 +90,7 @@ export default function TabForm() {
 
       setTimeout(() => {
         setFormState({ loading: false, error: null, success: false })
-      }, 5000)
+      }, 8000)
     } catch (error: any) {
       console.error('Error submitting form:', error)
       setFormState({ loading: false, error: 'Error submitting form', success: false })
@@ -99,62 +99,70 @@ export default function TabForm() {
 
   return (
     <>
-      <h2>{form.title}</h2>
+      <h2 className='font-bold italic text-2xl mb-4'>Join Ørvur Today!</h2>
+      <p className='mb-8'>
+        Ready to start your archery journey? Fill out the form below and we’ll
+        help you find the right team. Whether you’re a beginner or an experienced archer, we can’t
+        wait to welcome you to our club!
+      </p>
 
       {teamClosed ? (
-        <p className="text-red-600 font-semibold text-lg">Application Closed</p>
+        <p className="text-red font-semibold text-lg">Application Closed</p>
       ) : (
         <form
           action={`/api/form-submissions/${form.id}`}
           method="POST"
-          className="flex flex-col gap-4 max-w-md"
+          className="flex flex-col gap-4 w-full"
           onSubmit={handleSubmit}
         >
-          {form.fields?.map((field: any) => (
-            <div key={field.id} className="flex flex-col">
-              <label htmlFor={field.name} className="mb-1 font-semibold">
-                {field.label}
-              </label>
-
-              {/* TEXT INPUTS */}
-              {['text', 'email', 'number'].includes(field.blockType) && (
-                <input
-                  type={field.blockType === 'text' ? 'text' : field.blockType}
-                  name={field.name}
-                  id={field.name}
-                  required={field.required}
-                  className="border border-gray-300 p-2 rounded"
-                />
-              )}
-
-              {/* SELECT INPUT */}
-              {field.blockType === 'select' && (
-                <select
-                  name={field.name}
-                  id={field.name}
-                  required={field.required}
-                  className="border border-gray-300 p-2 rounded"
-                >
-                  <option value="">Choose…</option>
-                  {field.options?.map((opt: any) => (
-                    <option key={opt.id} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-          ))}
-          {formState.error && <p className="text-red-500">{formState.error}</p>}
+         
+          {formState.error && <p className="text-red">{formState.error}</p>}
 
           {formState.success ? (
-            <div className="text-green-500">
+            <div className="text-green-800 text-xl">
               <RichText data={form.confirmationMessage} />
             </div>
           ) : (
-            <button type="submit" className="bg-black text-white py-2">
-              {form.submitButtonLabel}
-            </button>
+            <>
+              {form.fields?.map((field: any) => (
+                <div key={field.id} className="flex flex-col">
+                  <label htmlFor={field.name} className="mb-2 font-semibold">
+                    {field.label}
+                  </label>
+
+                  {/* TEXT INPUTS */}
+                  {['text', 'email', 'number'].includes(field.blockType) && (
+                    <Input
+                      type={field.blockType === 'text' ? 'text' : field.blockType}
+                      name={field.name}
+                      id={field.name}
+                      required={field.required}
+                      placeholder={field.label}
+                    />
+                  )}
+
+                  {/* SELECT INPUT */}
+                  {field.blockType === 'select' && (
+                    <select
+                      name={field.name}
+                      id={field.name}
+                      required={field.required}
+                      className="border border-blue p-2"
+                    >
+                      <option value="">Choose Team…</option>
+                      {field.options?.map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              ))}
+              <Button type="submit" variant="default" className='mt-4'>
+                {form.submitButtonLabel}
+              </Button>
+            </>
           )}
         </form>
       )}
