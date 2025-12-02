@@ -83,13 +83,13 @@ export default function CompetitionTableWithFilter() {
 
   return (
     <div className="mt-6 space-y-6">
-      <h2 className="text-2xl font-semibold">Competitions</h2>
+      <h2 className="text-2xl font-bold italic">Competitions</h2>
 
       {/* TEAM COMBOBOX */}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            variant="secondary"
+            variant="outline"
             role="combobox"
             aria-expanded={open}
             className="w-[250px] justify-between"

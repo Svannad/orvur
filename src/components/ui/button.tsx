@@ -14,6 +14,8 @@ const buttonVariants = cva(
           "hover:text-black/90 text-black",
         secondary:
           "bg-white text-black hover:bg-white/90",
+        outline:
+          "border border-blue",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
