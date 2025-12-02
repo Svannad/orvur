@@ -13,8 +13,13 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
   const [hovered, setHovered] = useState<number | null>(null)
 
   useEffect(() => {
-    fetchTeams(block.limit).then(setTeams)
-  }, [block.limit])
+  async function load() {
+    const result = await fetchTeams(block.limit)
+    setTeams(result?.docs || result || [])
+  }
+  load()
+}, [block.limit])
+
 
   return (
     <section className="px-41 py-32">
