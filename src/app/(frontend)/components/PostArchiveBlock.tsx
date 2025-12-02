@@ -4,20 +4,62 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
+import { Search } from 'lucide-react'
+import { serializeLexicalRichText } from '../utils/serializeRichText'
 
 type PostArchiveProps = Extract<Page['content'][0], { blockType: 'postsArchive' }>
 
 export default function PostArchiveBlock({ block }: { block: PostArchiveProps }) {
   const [posts, setPosts] = useState<any[]>([])
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
-    fetchPosts(block.limit).then(setPosts)
+    fetchPosts(block.limit).then((fetched) => {
+      // Convert RichText to plain text for searching
+      const withPlainText = fetched.map((post: any) => ({
+        ...post,
+        _plainContent: serializeLexicalRichText(post.content || []),
+      }))
+      setPosts(withPlainText)
+    })
   }, [block.limit])
 
+  const filteredPosts = posts.filter((post) => {
+    const q = search.toLowerCase()
+
+    return (
+      post.maintitle?.toLowerCase().includes(q) ||
+      post.subtitle?.toLowerCase().includes(q) ||
+      post.author?.toLowerCase().includes(q) ||
+      post._plainContent?.toLowerCase().includes(q)
+    )
+  })
+
   return (
-    <section className="py-12 px-16">
+    <section className="py-41 px-32">
+      {/* HEADER ROW */}
+      <div className="flex items-center justify-between mb-8">
+        {block.maintitle && <h2 className="text-4xl italic font-bold">{block.maintitle}</h2>}
+
+        {/* Search */}
+        <div className="flex items-center bg-blue border border-blue cursor-pointer">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-3 py-2 w-64 bg-white focus:outline-none"
+          />
+          <Search color="white" size={20} className="mx-3" />
+        </div>
+      </div>
+
+      {/* Gold line */}
+      <div className="w-full h-0.5 bg-yellow mb-12"></div>
+
+      {/* POSTS GRID */}
       <div className="grid grid-cols-3 gap-8">
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <a
             key={post.id}
             href={`/posts/${post.id}`}
@@ -46,6 +88,10 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
           </a>
         ))}
       </div>
+
+      {filteredPosts.length === 0 && (
+        <p className="text-center text-gray-500 mt-10">No posts found.</p>
+      )}
     </section>
   )
 }
