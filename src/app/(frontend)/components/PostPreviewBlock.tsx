@@ -41,7 +41,7 @@ export default function PostPreviewBlock({ block }: { block: PostPreviewProps })
       )}
       </div>
 
-      <Carousel className="relative w-full">
+      <Carousel className="relative w-full mb-42">
         <CarouselContent>
           {posts.map((post) => (
             <CarouselItem key={post.id}>

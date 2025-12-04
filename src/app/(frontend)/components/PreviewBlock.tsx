@@ -48,16 +48,16 @@ export default function PreviewBlock({ block }: { block: PreviewProps }) {
       {/* Text Section */}
       <div className="flex flex-col justify-center w-1/2 space-y-12">
         <div className="space-y-6">
-          <h1 className="text-4xl italic font-bold text-black">
+          <h1 className="text-4xl italic font-bold">
             {block.maintitle || post?.maintitle}
           </h1>
 
-          <h2 className="text-2xl text-black font-bold">{block.subtitle || post?.subtitle}</h2>
+          <h2 className="text-2xl font-bold">{block.subtitle || post?.subtitle}</h2>
 
           {createdDate && <p className="text-black/50">{createdDate}</p>}
         </div>
 
-        <div className="text-black leading-relaxed text-xl line-clamp-5">
+        <div className="leading-relaxed text-xl line-clamp-5">
           <RichText data={block.description || post?.content} />
         </div>
 

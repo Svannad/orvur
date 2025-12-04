@@ -153,7 +153,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
         'min-w-0 shrink-0 grow-0',
         orientation === 'horizontal' ? 'pl-4' : 'pt-4',
         'basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-[28%]',
-        'aspect-square rounded-xl bg-slate-100 flex items-center justify-center text-slate-700',
+        'aspect-square rounded-xl flex items-center justify-center text-slate-700',
         className,
       )}
       {...props}
