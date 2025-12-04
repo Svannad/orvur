@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/carousel'
 import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 type PostPreviewProps = Extract<Page['content'][0], { blockType: 'postsPreview' }>
 
@@ -23,15 +25,21 @@ export default function PostPreviewBlock({ block }: { block: PostPreviewProps })
 
   return (
     <section className="py-12 pl-16">
+      <div className='flex w-full justify-between items-center pr-16'>
+
       {block.maintitle && (
-        <h2 className="text-4xl font-bold text-slate-900 mb-8">{block.maintitle}</h2>
+        <h2 className="text-3xl font-bold text-slate-900 mb-8">{block.maintitle}</h2>
       )}
 
       {block.cta && (
-        <a href={block.cta.link} className="text-black text-sm mt-1 underline">
+        <a href={block.cta.link} >
+          <Button variant="plain">
           {block.cta.text}
+          <ArrowRight/>
+          </Button>
         </a>
       )}
+      </div>
 
       <Carousel className="relative w-full">
         <CarouselContent>

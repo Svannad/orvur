@@ -39,7 +39,7 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
     <section className="py-41 px-32">
       {/* HEADER ROW */}
       <div className="flex items-center justify-between mb-8">
-        {block.maintitle && <h2 className="text-4xl italic font-bold">{block.maintitle}</h2>}
+        {block.maintitle && <h1 className="text-4xl italic font-bold">{block.maintitle}</h1>}
 
         {/* Search */}
         <div className="flex items-center bg-blue border border-blue cursor-pointer">

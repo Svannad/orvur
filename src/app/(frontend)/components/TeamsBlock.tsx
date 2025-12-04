@@ -23,6 +23,7 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
   return (
     <section className="px-41 py-32">
+      <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>
       <div className="flex gap-6 justify-center items-stretch overflow-hidden ">
         {teams.map((team, index) => {
           const expanded = hovered === index || (hovered === null && index === 0)
@@ -61,8 +62,8 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
               {/* Status Pill */}
               {team.status && (
-                <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm">
-                  Application: {team.status}
+                <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm font-semibold tracking-wider">
+                  {team.status}
                 </div>
               )}
             </a>
