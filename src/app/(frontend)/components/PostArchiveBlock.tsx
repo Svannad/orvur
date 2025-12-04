@@ -6,21 +6,23 @@ import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
 import { Search } from 'lucide-react'
 import { serializeLexicalRichText } from '../utils/serializeRichText'
+import { Skeleton } from '@/components/ui/skeleton'
 
 type PostArchiveProps = Extract<Page['content'][0], { blockType: 'postsArchive' }>
 
 export default function PostArchiveBlock({ block }: { block: PostArchiveProps }) {
   const [posts, setPosts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetchPosts(block.limit).then((fetched) => {
-      // Convert RichText to plain text for searching
       const withPlainText = fetched.map((post: any) => ({
         ...post,
         _plainContent: serializeLexicalRichText(post.content || []),
       }))
       setPosts(withPlainText)
+      setLoading(false)
     })
   }, [block.limit])
 
@@ -59,37 +61,43 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
 
       {/* POSTS GRID */}
       <div className="grid grid-cols-3 gap-8">
-        {filteredPosts.map((post) => (
-          <a
-            key={post.id}
-            href={`/posts/${post.id}`}
-            className="relative block w-full overflow-hidden group"
-          >
-            {post.heroImage && (
-              <div className="relative w-full aspect-square">
-                <Image
-                  src={post.heroImage.url}
-                  alt={post.heroImage.alt || 'Post image'}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+        {/* 🟦 Show skeletons before posts load */}
+        {loading &&
+          Array.from({ length: block.limit || 6 }).map((_, i) => (
+            <Skeleton key={i} className="aspect-square w-full rounded-md" />
+          ))}
+
+        {/* 🟨 Show real posts when loaded */}
+        {!loading &&
+          filteredPosts.map((post) => (
+            <a
+              key={post.id}
+              href={`/posts/${post.id}`}
+              className="relative block w-full overflow-hidden group"
+            >
+              {post.heroImage && (
+                <div className="relative w-full aspect-square">
+                  <Image
+                    src={post.heroImage.url}
+                    alt={post.heroImage.alt || 'Post image'}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              )}
+
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent z-10"></div>
+
+              <div className="absolute bottom-0 left-0 p-4 z-20">
+                <h3 className="text-lg font-semibold text-white">{post.maintitle}</h3>
+                {post.subtitle && <p className="text-white text-sm mt-1">{post.subtitle}</p>}
+                {post.author && <p className="text-white text-xs mt-1">By {post.author}</p>}
               </div>
-            )}
-
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent z-10"></div>
-
-            {/* Text content */}
-            <div className="absolute bottom-0 left-0 p-4 z-20">
-              <h3 className="text-lg font-semibold text-white">{post.maintitle}</h3>
-              {post.subtitle && <p className="text-white text-sm mt-1">{post.subtitle}</p>}
-              {post.author && <p className="text-white text-xs mt-1">By {post.author}</p>}
-            </div>
-          </a>
-        ))}
+            </a>
+          ))}
       </div>
 
-      {filteredPosts.length === 0 && (
+      {!loading && filteredPosts.length === 0 && (
         <p className="text-center text-gray-500 mt-10">No posts found.</p>
       )}
     </section>

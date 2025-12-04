@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
+import { Spinner } from '../ui/spinner'
 
 type FormState = {
   loading: boolean
@@ -56,7 +57,13 @@ export default function TabForm() {
     loadForm()
   }, [])
 
-  if (!form) return <p>Loading form…</p>
+  if (!form) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <Spinner className="w-8 h-8" />
+      </div>
+    )
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -99,11 +106,11 @@ export default function TabForm() {
 
   return (
     <>
-      <h2 className='font-bold italic text-2xl mb-4'>Join Ørvur Today!</h2>
-      <p className='mb-8'>
-        Ready to start your archery journey? Fill out the form below and we’ll
-        help you find the right team. Whether you’re a beginner or an experienced archer, we can’t
-        wait to welcome you to our club!
+      <h2 className="font-bold italic text-2xl mb-4">Join Ørvur Today!</h2>
+      <p className="mb-8">
+        Ready to start your archery journey? Fill out the form below and we’ll help you find the
+        right team. Whether you’re a beginner or an experienced archer, we can’t wait to welcome you
+        to our club!
       </p>
 
       {teamClosed ? (
@@ -115,7 +122,6 @@ export default function TabForm() {
           className="flex flex-col gap-4 w-full"
           onSubmit={handleSubmit}
         >
-         
           {formState.error && <p className="text-red">{formState.error}</p>}
 
           {formState.success ? (
@@ -159,8 +165,15 @@ export default function TabForm() {
                   )}
                 </div>
               ))}
-              <Button type="submit" variant="default" className='mt-4'>
-                {form.submitButtonLabel}
+              <Button type="submit" variant="default" className="mt-4" disabled={formState.loading}>
+                {formState.loading ? (
+                  <div className="flex items-center gap-2">
+                    <Spinner className="w-4 h-4" />
+                    Submitting…
+                  </div>
+                ) : (
+                  form.submitButtonLabel
+                )}
               </Button>
             </>
           )}
