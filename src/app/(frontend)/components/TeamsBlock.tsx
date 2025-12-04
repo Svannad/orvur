@@ -22,7 +22,7 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
 
   return (
-    <section className="px-41 py-32">
+    <section className="p-41">
       <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>
       <div className="flex gap-6 justify-center items-stretch overflow-hidden ">
         {teams.map((team, index) => {

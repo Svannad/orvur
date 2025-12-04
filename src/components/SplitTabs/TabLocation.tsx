@@ -2,7 +2,7 @@ export default function TabLoctaion() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex flex-col gap-2 mb-6">
-        <h2 className="text-xl font-bold mb-2 italic">Find Us</h2>
+        <h2 className="text-2xl font-bold mb-2 italic">Find Us</h2>
         <address className="not-italic">
           <p className="mb-2">Basement of the Bylgjan building</p>
           <p>Mýravegur 12</p>

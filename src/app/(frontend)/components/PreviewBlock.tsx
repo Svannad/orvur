@@ -37,7 +37,7 @@ export default function PreviewBlock({ block }: { block: PreviewProps }) {
     : null
 
   return (
-    <section className="flex items-center gap-12 py-12 px-16 min-h-[50vh]">
+    <section className="flex items-center gap-12 py-12 px-41 min-h-[50vh]">
       {/* Image Section */}
       {image && (
         <div className="relative w-1/2 aspect-4/3 overflow-hidden">

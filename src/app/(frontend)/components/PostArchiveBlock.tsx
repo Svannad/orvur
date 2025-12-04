@@ -36,9 +36,9 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
   })
 
   return (
-    <section className="py-41 px-32">
+    <section className="p-41">
       {/* HEADER ROW */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-12">
         {block.maintitle && <h1 className="text-4xl italic font-bold">{block.maintitle}</h1>}
 
         {/* Search */}

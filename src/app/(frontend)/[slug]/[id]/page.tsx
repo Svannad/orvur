@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string; id: str
         {/* Title + Subtitle */}
         <div className="pt-8 pb-3">
           <h1 className="text-4xl font-bold mb-4 italic">{title}</h1>
-          {subtitle && <p className="text-2xl text-black">{subtitle}</p>}
+          {subtitle && <h2 className="text-2xl text-black">{subtitle}</h2>}
         </div>
 
         {/* Vertical gold line */}

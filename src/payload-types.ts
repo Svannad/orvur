@@ -257,13 +257,6 @@ export interface Page {
           }
         | {
             maintitle: string;
-            limit?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'compOverview';
-          }
-        | {
-            maintitle: string;
             cta?: {
               text?: string | null;
               link?: string | null;
@@ -810,14 +803,6 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         teamsOverview?:
-          | T
-          | {
-              maintitle?: T;
-              limit?: T;
-              id?: T;
-              blockName?: T;
-            };
-        compOverview?:
           | T
           | {
               maintitle?: T;
