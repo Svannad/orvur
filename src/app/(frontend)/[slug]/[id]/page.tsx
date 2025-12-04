@@ -4,6 +4,7 @@ import { fetchTeamById } from '../../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import SplitTabs from '@/components/SplitTabs/page'
+import ImageGallery from '@/components/ImageGallery'
 
 export default async function Page({ params }: { params: { slug: string; id: string } }) {
   const { slug, id } = params
@@ -55,24 +56,7 @@ export default async function Page({ params }: { params: { slug: string; id: str
       )}
       <SplitTabs author={author} content={content} />
 
-      {/* Image Gallery */}
-      {gallery.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-2xl font-bold mb-6">More Images</h2>
-
-          <Carousel className="relative w-full">
-            <CarouselContent>
-              {gallery.map((image: any, index: number) => (
-                <CarouselItem key={index}>
-                  <div className="relative w-full h-full aspect-square z-0">
-                    <Image src={image.url} alt={image.alt || title} fill className="object-cover" />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </section>
-      )}
+      <ImageGallery gallery={gallery} />
     </article>
   )
 }
