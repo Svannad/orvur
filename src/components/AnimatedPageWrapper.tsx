@@ -26,7 +26,7 @@ export default function AnimatedPageWrapper({ children }: { children: React.Reac
       {/* Angled color bands */}
       <motion.div
         style={{ x: lineX, y: lineY, opacity: lineOpacity }}
-        className="pointer-events-none absolute bottom-0 right-[-900px] w-[2200px] h-[1600px] rotate-[-40deg] flex flex-col"
+        className="pointer-events-none absolute bottom-0 right-[-900px] w-[2200px] h-[1400px] 2xl:h-[1600px] rotate-[-40deg] flex flex-col"
       >
         <div className="h-[10%] w-full bg-blue/70 mb-24" />
         <div className="h-[10%] w-full bg-red/70 mb-24" />

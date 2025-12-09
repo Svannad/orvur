@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import { usePathname } from "next/navigation"
-import { fetchComps } from "@/app/(frontend)/utils/fetchComps"
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { fetchComps } from '@/app/(frontend)/utils/fetchComps'
 
 import {
   Table,
@@ -11,11 +11,11 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from "@/components/ui/table"
+} from '@/components/ui/table'
 
-import { Button } from "@/components/ui/button"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Button } from '@/components/ui/button'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import {
   Command,
   CommandEmpty,
@@ -23,18 +23,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+} from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 export default function CompetitionTableWithFilter() {
   const pathname = usePathname()
 
   const [comps, setComps] = useState<any[]>([])
-  const [selectedTeam, setSelectedTeam] = useState<string>("")
+  const [selectedTeam, setSelectedTeam] = useState<string>('')
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -43,21 +39,17 @@ export default function CompetitionTableWithFilter() {
 
   // Extract unique team names after fetch
   const allTeams = Array.from(
-    new Set(
-      comps.flatMap((comp) =>
-        comp.teams?.map((team: any) => team.title) || []
-      )
-    )
+    new Set(comps.flatMap((comp) => comp.teams?.map((team: any) => team.title) || [])),
   )
 
   // Detect if we are on a team page: /teams/[slug]
   useEffect(() => {
     if (!comps.length) return // wait for fetch
 
-    const isTeamPage = pathname.startsWith("/teams/")
+    const isTeamPage = pathname.startsWith('/teams/')
 
     if (isTeamPage) {
-      const slug = pathname.replace("/teams/", "")
+      const slug = pathname.replace('/teams/', '')
 
       // Find matching team title by slug
       const matchingTeam = comps
@@ -69,17 +61,15 @@ export default function CompetitionTableWithFilter() {
       }
     } else {
       // About page OR anything else → show all by default
-      setSelectedTeam("")
+      setSelectedTeam('')
     }
   }, [pathname, comps])
 
   // Filter competitions
   const filteredComps =
-    selectedTeam === ""
+    selectedTeam === ''
       ? comps
-      : comps.filter((comp) =>
-          comp.teams?.some((team: any) => team.title === selectedTeam)
-        )
+      : comps.filter((comp) => comp.teams?.some((team: any) => team.title === selectedTeam))
 
   return (
     <div className="mt-6 space-y-6">
@@ -94,7 +84,7 @@ export default function CompetitionTableWithFilter() {
             aria-expanded={open}
             className="w-[250px] justify-between"
           >
-            {selectedTeam || "Filter by team..."}
+            {selectedTeam || 'Filter by team...'}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -109,16 +99,13 @@ export default function CompetitionTableWithFilter() {
                 <CommandItem
                   value=""
                   onSelect={() => {
-                    setSelectedTeam("")
+                    setSelectedTeam('')
                     setOpen(false)
                   }}
                 >
                   All Teams
                   <Check
-                    className={cn(
-                      "ml-auto",
-                      selectedTeam === "" ? "opacity-100" : "opacity-0"
-                    )}
+                    className={cn('ml-auto', selectedTeam === '' ? 'opacity-100' : 'opacity-0')}
                   />
                 </CommandItem>
 
@@ -127,16 +114,13 @@ export default function CompetitionTableWithFilter() {
                     key={team}
                     value={team}
                     onSelect={(val) => {
-                      setSelectedTeam(val === selectedTeam ? "" : val)
+                      setSelectedTeam(val === selectedTeam ? '' : val)
                       setOpen(false)
                     }}
                   >
                     {team}
                     <Check
-                      className={cn(
-                        "ml-auto",
-                        selectedTeam === team ? "opacity-100" : "opacity-0"
-                      )}
+                      className={cn('ml-auto', selectedTeam === team ? 'opacity-100' : 'opacity-0')}
                     />
                   </CommandItem>
                 ))}
@@ -164,15 +148,11 @@ export default function CompetitionTableWithFilter() {
             <TableRow key={comp.id}>
               <TableCell>{comp.title}</TableCell>
               <TableCell>{comp.distance}</TableCell>
-              <TableCell>
-                {new Date(comp.date).toLocaleDateString("da-DK")}
-              </TableCell>
+              <TableCell>{new Date(comp.date).toLocaleDateString('da-DK')}</TableCell>
               <TableCell>{comp.location}</TableCell>
               <TableCell>{comp.time}</TableCell>
               <TableCell>
-                {comp.teams?.length
-                  ? comp.teams.map((t: any) => t.title).join(", ")
-                  : "—"}
+                {comp.teams?.length ? comp.teams.map((t: any) => t.title).join(', ') : '—'}
               </TableCell>
             </TableRow>
           ))}

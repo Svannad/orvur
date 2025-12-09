@@ -110,7 +110,7 @@ export default function TabForm() {
 
 
   return (
-    <div className='2xl:pr-48'>
+    <div className='xl:pr-16 2xl:pr-48'>
       <h2 className="font-bold italic text-2xl mb-4">Join Ørvur Today!</h2>
       <p className="mb-8">
         Ready to start your archery journey? Fill out the form below and we’ll help you find the

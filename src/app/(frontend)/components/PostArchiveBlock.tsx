@@ -38,7 +38,7 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
   })
 
   return (
-    <section className="p-41">
+    <section className="px-24 2xl:px-41 py-41">
       {/* HEADER ROW */}
       <div className="flex items-center justify-between mb-12">
         {block.maintitle && <h1 className="text-4xl italic font-bold">{block.maintitle}</h1>}

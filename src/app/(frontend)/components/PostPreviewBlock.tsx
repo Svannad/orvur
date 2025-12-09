@@ -24,8 +24,8 @@ export default function PostPreviewBlock({ block }: { block: PostPreviewProps })
   }, [block.limit])
 
   return (
-    <section className="py-12 pl-41">
-      <div className="flex w-full justify-between items-center pr-41">
+    <section className="py-12 pl-24 2xl:pl-41">
+      <div className="flex w-full justify-between items-center pr-24 2xl:pr-41">
         {block.maintitle && (
           <h2 className="text-3xl font-bold text-slate-900 mb-8">{block.maintitle}</h2>
         )}

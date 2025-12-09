@@ -37,7 +37,7 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
   }, [block.limit])
 
   return (
-    <section className="p-41">
+    <section className="px-24 2xl:px-41 py-41">
       {block.maintitle && <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>}
 
       <div className="flex gap-6 justify-center items-stretch overflow-hidden">

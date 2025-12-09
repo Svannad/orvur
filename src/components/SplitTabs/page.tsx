@@ -23,43 +23,42 @@ export default function SplitTabs({ author, content }: { author?: string; conten
     accordion: isTeam || isAbout,
   }
 
-  const defaultTab = "content"
+  const defaultTab = 'content'
 
   return (
     <Tabs defaultValue={defaultTab} className="w-full">
       <div className="grid grid-cols-[1fr_auto_300px] gap-8 items-start min-h-[50vh]">
-
         {/* LEFT CONTENT AREA */}
-        <div className="prose prose-lg max-w-none pt-8 pb-24">
-          {allowedTabs.content && (
-            <TabsContent value="content">
-              <TabContent content={content} />
-            </TabsContent>
-          )}
-
-          {allowedTabs.form && (
-            <TabsContent value="form">
-              <TabForm />
-            </TabsContent>
-          )}
-
-          {allowedTabs.location && (
-            <TabsContent value="location">
-              <TabLocation />
-            </TabsContent>
-          )}
-
-          {allowedTabs.table && (
-            <TabsContent value="table">
-              <TabTable />
-            </TabsContent>
-          )}
-
-          {allowedTabs.accordion && (
-            <TabsContent value="accordion">
-              <TabAccordion />
-            </TabsContent>
-          )}
+        <div className="prose prose-lg max-w-none pt-8 pb-24 overflow-x-auto">
+          <div className="min-w-[300px]">
+            {' '}
+            {/* optional min-width so it doesn’t shrink too much */}
+            {allowedTabs.content && (
+              <TabsContent value="content">
+                <TabContent content={content} />
+              </TabsContent>
+            )}
+            {allowedTabs.form && (
+              <TabsContent value="form">
+                <TabForm />
+              </TabsContent>
+            )}
+            {allowedTabs.location && (
+              <TabsContent value="location">
+                <TabLocation />
+              </TabsContent>
+            )}
+            {allowedTabs.table && (
+              <TabsContent value="table">
+                <TabTable />
+              </TabsContent>
+            )}
+            {allowedTabs.accordion && (
+              <TabsContent value="accordion">
+                <TabAccordion />
+              </TabsContent>
+            )}
+          </div>
         </div>
 
         {/* MIDDLE LINE */}
@@ -68,13 +67,9 @@ export default function SplitTabs({ author, content }: { author?: string; conten
         {/* RIGHT SIDE TABS */}
         <div className="flex flex-col gap-4 pt-8">
           <TabsList className="flex flex-col gap-2 bg-transparent p-0 h-auto">
-
             {allowedTabs.content && (
-              <TabsTrigger
-                value="content"
-                className="w-full justify-start"
-              >
-                {isPost && author ?  author : "About"}
+              <TabsTrigger value="content" className="w-full justify-start">
+                {isPost && author ? author : 'About'}
               </TabsTrigger>
             )}
 
