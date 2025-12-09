@@ -6,9 +6,9 @@ import { fetchTeams } from '../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 
-function TeamSkeleton() {
+function TeamSkeleton({ height = '700px' }: { height?: string }) {
   return (
-    <div className="relative h-[700px] w-full overflow-hidden rounded-md">
+    <div className={`relative w-full overflow-hidden rounded-md mb-6`} style={{ height }}>
       <div className="absolute inset-0 bg-accent animate-pulse" />
       <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 p-6 z-20">
@@ -37,28 +37,23 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
   }, [block.limit])
 
   return (
-    <section className="px-24 2xl:px-41 py-41">
-      {block.maintitle && <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>}
+    <section className="px-8 lg:px-24 2xl:px-41 py-41">
+      {block.maintitle && (
+        <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>
+      )}
 
-      <div className="flex gap-6 justify-center items-stretch overflow-hidden">
-        {/* Skeletons */}
-        {loading &&
-          Array.from({ length: block.limit || 3 }).map((_, i) => <TeamSkeleton key={i} />)}
-
-        {/* Real content */}
-        {!loading && teams.length > 0 ? (
-          teams.map((team, index) => {
-            const expanded = hovered === index || (hovered === null && index === 0)
-
-            return (
+      {/* Mobile Section */}
+      <div className="flex flex-col gap-6 lg:hidden">
+        {loading
+          ? Array.from({ length: block.limit || 3 }).map((_, i) => (
+              <TeamSkeleton key={i} height="400px" />
+            ))
+          : teams.length > 0
+          ? teams.map((team) => (
               <a
                 key={team.id}
                 href={`/teams/${team.id}`}
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}
-                className={`team-item relative h-[700px] overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                  expanded ? 'is-hovered' : ''
-                }`}
+                className="relative h-[250px] overflow-hidden cursor-pointer"
               >
                 {team.image?.url ? (
                   <Image src={team.image.url} alt={team.title} fill className="object-cover" />
@@ -70,8 +65,8 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
                 <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
                   <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
-                  {expanded && team.subDescription && (
-                    <div className="text-sm text-white transition-opacity duration-300">
+                  {team.subDescription && (
+                    <div className="text-sm text-white">
                       <RichText data={team.subDescription} />
                     </div>
                   )}
@@ -83,16 +78,58 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
                   </div>
                 )}
               </a>
-            )
-          })
-        ) : (
-          // Empty state
-          !loading && (
-            <div className="w-full text-center py-10 text-gray-500">
-              No teams found.
-            </div>
-          )
-        )}
+            ))
+          : !loading && (
+              <div className="w-full text-center py-10 text-gray-500">No teams found.</div>
+            )}
+      </div>
+
+      {/* Desktop Section */}
+      <div className="hidden lg:flex gap-6 justify-center items-stretch overflow-hidden">
+        {loading
+          ? Array.from({ length: block.limit || 3 }).map((_, i) => <TeamSkeleton key={i} />)
+          : teams.length > 0
+          ? teams.map((team, index) => {
+              const expanded = hovered === index || hovered === null
+
+              return (
+                <a
+                  key={team.id}
+                  href={`/teams/${team.id}`}
+                  onMouseEnter={() => setHovered(index)}
+                  onMouseLeave={() => setHovered(null)}
+                  className={`team-item relative h-[700px] overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
+                    expanded ? 'is-hovered' : ''
+                  }`}
+                >
+                  {team.image?.url ? (
+                    <Image src={team.image.url} alt={team.title} fill className="object-cover" />
+                  ) : (
+                    <div className="absolute inset-0 bg-black/50" />
+                  )}
+
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+
+                  <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
+                    <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
+                    {expanded && team.subDescription && (
+                      <div className="text-sm text-white transition-opacity duration-300">
+                        <RichText data={team.subDescription} />
+                      </div>
+                    )}
+                  </div>
+
+                  {team.status && (
+                    <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm font-semibold tracking-wider">
+                      {team.status}
+                    </div>
+                  )}
+                </a>
+              )
+            })
+          : !loading && (
+              <div className="w-full text-center py-10 text-gray-500">No teams found.</div>
+            )}
       </div>
     </section>
   )

@@ -6,8 +6,8 @@ type AboutProps = Extract<Page['content'][0], { blockType: 'about' }>
 
 export default function AboutBlock({ block }: { block: AboutProps }) {
   return (
-    <article className="py-28 pl-24 2xl:pl-41">
-      <header className=" mb-5 grid grid-cols-[1fr_auto] pt-20 items-start gap-6 pr-24 2xl:pr-41">
+    <article className="py-28 pl-8 lg:pl-24 2xl:pl-41">
+      <header className=" mb-5 grid grid-cols-[1fr_auto] pt-20 items-start gap-6 pr-8 lg:pr-24 2xl:pr-41">
         {/* Title + Subtitle */}
         <div className="pt-8 pb-3">
           <h1 className="text-4xl font-bold mb-4 italic">{block.maintitle}</h1>
@@ -15,7 +15,7 @@ export default function AboutBlock({ block }: { block: AboutProps }) {
         </div>
 
         {/* Vertical gold line */}
-        <div className="w-0.5 bg-yellow h-full mr-[235px] 2xl:mr-[158px]" />
+        <div className="w-0.5 hidden lg:block bg-yellow h-full mr-[235px] 2xl:mr-[158px]" />
       </header>
 
       {/* Hero Image */}
@@ -25,7 +25,7 @@ export default function AboutBlock({ block }: { block: AboutProps }) {
             src={block.heroImage.url}
             alt={block.heroImage.alt || block.title}
             fill
-            className="object-cover pr-24 2xl:pr-41"
+            className="object-cover pr-8 lg:pr-24 2xl:pr-41"
           />
         </div>
       )}

@@ -38,7 +38,7 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
   })
 
   return (
-    <section className="px-24 2xl:px-41 py-41">
+    <section className="px-8 lg:px-24 2xl:px-41 py-41">
       {/* HEADER ROW */}
       <div className="flex items-center justify-between mb-12">
         {block.maintitle && <h1 className="text-4xl italic font-bold">{block.maintitle}</h1>}
@@ -60,7 +60,7 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
       <div className="w-full h-0.5 bg-yellow mb-12"></div>
 
       {/* POSTS GRID */}
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
         {/* 🟦 Show skeletons before posts load */}
         {loading &&
           Array.from({ length: block.limit || 6 }).map((_, i) => (

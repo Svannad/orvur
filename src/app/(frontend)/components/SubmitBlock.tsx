@@ -28,8 +28,7 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
     load()
   }, [])
 
-  const getTeamValue = (s: any) =>
-    s.submissionData?.find((f: any) => f.field === 'team')?.value
+  const getTeamValue = (s: any) => s.submissionData?.find((f: any) => f.field === 'team')?.value
 
   const splitSubmissions = (teamTitle: string) => {
     const teamConfig = teams.find((t) => t.title === teamTitle)
@@ -62,7 +61,7 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
   const TEAM_ORDER = ['Child', 'Kadet', 'Adult']
 
   return (
-    <div className="py-28 px-41">
+    <div className="py-28 px-8 lg:px-24 2xl:px-41">
       <h1 className="text-4xl font-bold mb-8 text-black italic">Applications Overview</h1>
 
       <Tabs defaultValue="Child" className="w-full">
@@ -104,7 +103,9 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
                 </h2>
 
                 {main.length === 0 ? (
-                  <p className="text-black/50">No submissions yet or log into admin to see submissions</p>
+                  <p className="text-black/50">
+                    No submissions yet or log into admin to see submissions
+                  </p>
                 ) : (
                   <div className="space-y-3">{main.map(renderSubmission)}</div>
                 )}
@@ -116,7 +117,9 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
                 </h2>
 
                 {waiting.length === 0 ? (
-                  <p className="text-black/50">No one on the waiting list or log into admin to see submissions</p>
+                  <p className="text-black/50">
+                    No one on the waiting list or log into admin to see submissions
+                  </p>
                 ) : (
                   <div className="space-y-3">{waiting.map(renderSubmission)}</div>
                 )}

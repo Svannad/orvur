@@ -37,20 +37,18 @@ export default function PreviewBlock({ block }: { block: PreviewProps }) {
     : null
 
   return (
-    <section className="flex items-center gap-12 py-12 px-24 2xl:px-41 min-h-[50vh]">
+    <section className="w-full flex flex-col lg:flex-row items-center gap-12 py-12 px-8 lg:px-24 2xl:px-41 min-h-[50vh]">
       {/* Image Section */}
       {image && (
-        <div className="relative w-1/2 aspect-4/3 overflow-hidden">
+        <div className="relative w-full lg:w-1/2 aspect-4/3 overflow-hidden">
           <Image src={image.url} alt={image.alt || 'Preview Image'} fill className="object-cover" />
         </div>
       )}
 
       {/* Text Section */}
-      <div className="flex flex-col justify-center w-1/2 space-y-12">
+      <div className="flex flex-col justify-center w-full lg:w-1/2 space-y-12">
         <div className="space-y-6">
-          <h1 className="text-4xl italic font-bold">
-            {block.maintitle || post?.maintitle}
-          </h1>
+          <h1 className="text-4xl italic font-bold">{block.maintitle || post?.maintitle}</h1>
 
           <h2 className="text-2xl font-bold">{block.subtitle || post?.subtitle}</h2>
 
