@@ -115,3 +115,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom pulsing animations */
+@keyframes ping-slow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes ping-slower {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes ping-slowest {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Fade-out and expand effect */
+.fade-out .ring {
+  animation: expand-fade 0.8s forwards;
+}
+
+@keyframes expand-fade {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
