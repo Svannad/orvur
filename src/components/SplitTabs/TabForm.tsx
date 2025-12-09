@@ -66,43 +66,48 @@ export default function TabForm() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!form) return
+  e.preventDefault()
+  if (!form) return
 
-    setFormState({ loading: true, error: null, success: false })
+  setFormState({ loading: true, error: null, success: false })
 
-    try {
-      const formData = new FormData(e.target as HTMLFormElement)
-      const data = Object.fromEntries(formData.entries())
+  try {
+    const formData = new FormData(e.target as HTMLFormElement)
+    const data = Object.fromEntries(formData.entries())
 
-      const response = await fetch(`/api/form-submissions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          form: form.id,
-          submissionData: Object.entries(data)?.map(([field, value]) => ({
-            field,
-            value: value as string,
-          })),
-        }),
-      })
+    const response = await fetch(`/api/form-submissions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        form: form.id,
+        submissionData: Object.entries(data).map(([field, value]) => ({
+          field,
+          value: value as string,
+        })),
+      }),
+    })
 
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`)
-      }
-      setFormState({ loading: false, error: null, success: true })
-      ;(e.target as HTMLFormElement).reset()
-
-      setTimeout(() => {
-        setFormState({ loading: false, error: null, success: false })
-      }, 8000)
-    } catch (error: any) {
-      console.error('Error submitting form:', error)
-      setFormState({ loading: false, error: 'Error submitting form', success: false })
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null)
+      throw new Error(errorData?.message || 'Submission failed')
     }
+
+    setFormState({ loading: false, error: null, success: true })
+    ;(e.target as HTMLFormElement).reset()
+
+    setTimeout(() => {
+      setFormState({ loading: false, error: null, success: false })
+    }, 8000)
+  } catch (error: any) {
+    console.error('Error submitting form:', error)
+    setFormState({
+      loading: false,
+      error: error?.message || 'Something went wrong. Please try again.',
+      success: false,
+    })
   }
+}
+
 
   return (
     <>

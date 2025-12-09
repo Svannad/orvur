@@ -1,7 +1,6 @@
 import React from 'react'
 import './styles.css'
 import Navbar from './components/Navbar'
-import AdminNav from './components/AdminNav'
 import Footer from './components/Footer'
 
 export const metadata = {
@@ -18,7 +17,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <link rel="stylesheet" href="https://use.typekit.net/abf6uhe.css"></link>
       </head>
       <body className="bg-white relative">
-        <AdminNav />
         <Navbar />
 
         <main className="relative z-20 bg-white min-h-[1500px] mb-[350px]">

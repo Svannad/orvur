@@ -1,24 +1,29 @@
+// utils/fetchPageBySlug.ts
 export async function fetchPageBySlug(slug: string) {
   try {
-    const url = `http://localhost:3000/api/pages?where[slug][equals]=${slug}`
-    console.log('Fetching:', url)
+    const url = `http://localhost:3000/api/pages?where[slug][equals]=${encodeURIComponent(slug)}`
 
     const res = await fetch(url, {
       cache: 'no-store',
     })
 
-    console.log('Response status:', res.status)
-
+    // ✅ Handle HTTP errors
     if (!res.ok) {
-      console.error('Fetch failed:', res.status, res.statusText)
-      return null
+      throw new Error(`Failed to fetch page "${slug}": ${res.status}`)
     }
 
     const data = await res.json()
-    console.log('Response data:', data)
-    return data.docs?.[0] || null
+
+    // ✅ Validate structure
+    if (!data?.docs || !Array.isArray(data.docs)) {
+      throw new Error('Invalid page response format')
+    }
+
+    return data.docs[0] || null
   } catch (error) {
-    console.error('Fetch error:', error)
+    console.error('fetchPageBySlug error:', error)
+
+    // ✅ Safe fallback so UI never crashes
     return null
   }
 }

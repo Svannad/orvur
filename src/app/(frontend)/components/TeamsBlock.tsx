@@ -10,14 +10,11 @@ function TeamSkeleton() {
   return (
     <div className="relative h-[700px] w-full overflow-hidden rounded-md">
       <div className="absolute inset-0 bg-accent animate-pulse" />
-
       <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
-
       <div className="absolute bottom-0 left-0 p-6 z-20">
         <div className="h-6 w-32 bg-white/30 rounded-md animate-pulse mb-3"></div>
         <div className="h-4 w-48 bg-white/20 rounded-md animate-pulse"></div>
       </div>
-
       <div className="absolute top-4 right-4 bg-white/30 h-6 w-20 rounded-full animate-pulse" />
     </div>
   )
@@ -41,7 +38,7 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
   return (
     <section className="p-41">
-      <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>
+      {block.maintitle && <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>}
 
       <div className="flex gap-6 justify-center items-stretch overflow-hidden">
         {/* Skeletons */}
@@ -49,7 +46,7 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
           Array.from({ length: block.limit || 3 }).map((_, i) => <TeamSkeleton key={i} />)}
 
         {/* Real content */}
-        {!loading &&
+        {!loading && teams.length > 0 ? (
           teams.map((team, index) => {
             const expanded = hovered === index || (hovered === null && index === 0)
 
@@ -73,7 +70,6 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
 
                 <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
                   <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
-
                   {expanded && team.subDescription && (
                     <div className="text-sm text-white transition-opacity duration-300">
                       <RichText data={team.subDescription} />
@@ -88,7 +84,15 @@ export default function TeamsBlock({ block }: { block: TeamsProps }) {
                 )}
               </a>
             )
-          })}
+          })
+        ) : (
+          // Empty state
+          !loading && (
+            <div className="w-full text-center py-10 text-gray-500">
+              No teams found.
+            </div>
+          )
+        )}
       </div>
     </section>
   )
