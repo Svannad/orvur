@@ -54,7 +54,7 @@ export default function Footer() {
           </a>
         </div>
       </section>
-      <section>
+      <section className='hidden lg:block'>
         <Image src="/logo.png" alt="Ørvur Logo" width={150} height={50} className="mx-auto mt-4" />
       </section>
     </footer>
