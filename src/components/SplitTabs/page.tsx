@@ -30,7 +30,7 @@ export default function SplitTabs({ author, content }: { author?: string; conten
       <div className="grid grid-cols-[1fr_auto_300px] gap-8 items-start min-h-[50vh]">
 
         {/* LEFT CONTENT AREA */}
-        <div className="prose prose-lg max-w-none pt-8">
+        <div className="prose prose-lg max-w-none pt-8 pb-24">
           {allowedTabs.content && (
             <TabsContent value="content">
               <TabContent content={content} />

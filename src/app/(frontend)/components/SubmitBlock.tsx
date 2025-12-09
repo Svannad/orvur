@@ -104,7 +104,7 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
                 </h2>
 
                 {main.length === 0 ? (
-                  <p className="text-black/50">No submissions yet.</p>
+                  <p className="text-black/50">No submissions yet or log into admin to see submissions</p>
                 ) : (
                   <div className="space-y-3">{main.map(renderSubmission)}</div>
                 )}
@@ -116,7 +116,7 @@ export default function SubmitBlock({ block }: { block: SubmitProps }) {
                 </h2>
 
                 {waiting.length === 0 ? (
-                  <p className="text-black/50">No one on the waiting list.</p>
+                  <p className="text-black/50">No one on the waiting list or log into admin to see submissions</p>
                 ) : (
                   <div className="space-y-3">{waiting.map(renderSubmission)}</div>
                 )}
