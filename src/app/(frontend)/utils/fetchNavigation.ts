@@ -1,5 +1,7 @@
+const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
+
 export async function fetchNavigation() {
-  const res = await fetch('http://localhost:3000/api/globals/navigation', {
+  const res = await fetch(`${baseUrl}/api/globals/navigation`, {
     cache: 'no-store',
   })
   

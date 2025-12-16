@@ -1,6 +1,8 @@
+const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
+
 export async function fetchPageBySlug(slug: string) {
   try {
-    const url = `http://localhost:3000/api/pages?where[slug][equals]=${slug}`
+    const url = `${baseUrl}/api/pages?where[slug][equals]=${slug}`
     console.log('Fetching:', url)
 
     const res = await fetch(url, {

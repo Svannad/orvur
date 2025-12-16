@@ -2,7 +2,9 @@ import Image from 'next/image'
 import { fetchPostById } from '../../utils/fetchPosts'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
-export default async function Page({ params }: { params: { slug: string; id: string } }) {
+export default async function Page({ params }: {
+  params: Record<string, string>;
+}) {
   const post = await fetchPostById(params.id)
 
   if (!post) {

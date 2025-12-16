@@ -1,6 +1,7 @@
-// utils/fetchPosts.ts
+const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
+
 export const fetchPosts = async (limit?: number) => {
-  const url = new URL(`http://localhost:3000/api/posts`);
+  const url = new URL(`${baseUrl}/api/posts`);
   url.searchParams.append('sort', '-createdAt');
   if (limit) url.searchParams.append('limit', limit.toString());
 
@@ -10,7 +11,7 @@ export const fetchPosts = async (limit?: number) => {
 };
 
 export const fetchPostById = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  const res = await fetch(`${baseUrl}/api/posts/${id}`, {
     cache: "no-store",
   });
 
