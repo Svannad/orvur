@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
-import { Search } from 'lucide-react'
 import { serializeLexicalRichText } from '../utils/serializeRichText'
+import { Search } from 'lucide-react'
 
 type PostArchiveProps = Extract<Page['content'][0], { blockType: 'postsArchive' }>
 
