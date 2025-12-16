@@ -1,7 +1,8 @@
-// utils/fetchFAQ.ts
+const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
+
 export async function fetchFAQ() {
   try {
-    const res = await fetch(`http://localhost:3000/api/faq?limit=100`, {
+    const res = await fetch(`${baseUrl}/api/faq?limit=100`, {
       cache: 'no-store',
     })
 

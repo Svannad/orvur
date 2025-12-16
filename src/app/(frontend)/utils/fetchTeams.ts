@@ -6,6 +6,7 @@ export const fetchTeams = async (limit?: number) => {
   url.searchParams.append('sort', 'createdAt');
   if (limit) url.searchParams.append('limit', limit.toString())
 
+  try {
     const res = await fetch(url.toString(), { cache: 'no-store' })
 
     // ✅ handle HTTP errors

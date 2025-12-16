@@ -2,7 +2,7 @@ const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
 
 export const fetchPosts = async (limit?: number) => {
   try {
-    const url = new URL('${baseUrl}/api/posts')
+    const url = new URL(`${baseUrl}/api/posts`)
     url.searchParams.append('sort', '-createdAt')
     if (limit) url.searchParams.append('limit', limit.toString())
 

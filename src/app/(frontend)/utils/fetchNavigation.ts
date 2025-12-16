@@ -1,3 +1,4 @@
+
 export async function fetchNavigation() {
   const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
 
