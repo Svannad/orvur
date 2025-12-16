@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import { fetchPostById } from '../../utils/fetchPosts'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { PageProps } from '.next/types/app/(frontend)/layout'
 
-
-export default async function Page({ params }: { params: { slug: string; id: string } }) {
-  const post = await fetchPostById(params!.id);
+export default async function Page({ params }: PageProps) {
+  const post = await fetchPostById(params.id)
 
   if (!post) {
     return <div className="p-8 text-center">404 - Post not found</div>
