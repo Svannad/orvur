@@ -32,6 +32,12 @@ export default function PostPreviewBlock({ block }: { block: PostPreviewProps })
         <h2 className="text-4xl font-bold text-slate-900 mb-8">{block.maintitle}</h2>
       )}
 
+      {block.cta && (
+        <a href={block.cta.link} className="text-black text-sm mt-1 underline">
+          {block.cta.text}
+        </a>
+      )}
+
       <Carousel className="relative w-full">
         <CarouselContent>
           {posts.map((post) => (
@@ -56,14 +62,6 @@ export default function PostPreviewBlock({ block }: { block: PostPreviewProps })
                 <div className="p-4 absolute bottom-0 left-0 z-20">
                   <h3 className="text-lg font-semibold text-white">{post.maintitle}</h3>
                   {post.subtitle && <p className="text-white text-sm mt-1">{post.subtitle}</p>}
-                  {block.cta && (
-                    <a
-                      href={block.cta.link}
-                      className="text-white text-sm mt-1 underline"
-                    >
-                      {block.cta.text}
-                    </a>
-                  )}
                 </div>
               </a>
             </CarouselItem>

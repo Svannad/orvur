@@ -7,12 +7,6 @@ export const Posts: CollectionConfig = {
   },
   fields: [
     {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
-    {
       name: 'maintitle',
       type: 'text',
       required: true,

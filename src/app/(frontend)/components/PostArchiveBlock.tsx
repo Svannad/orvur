@@ -65,7 +65,7 @@ export default function PostArchiveBlock({ block }: { block: PostArchiveProps })
         {filteredPosts.map((post) => (
           <a
             key={post.id}
-            href={`/${post.slug}/${post.id}`}
+            href={`/posts/${post.id}`}
             className="relative block w-full overflow-hidden group"
           >
             {post.heroImage && (

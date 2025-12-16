@@ -1,68 +1,88 @@
 import Image from 'next/image'
 import { fetchPostById } from '../../utils/fetchPosts'
+import { fetchTeamById } from '../../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
-type PageProps = {
-  params: Promise<{ slug: string; id: string }>
-}
+export default async function Page({ params }: { params: { slug: string; id: string } }) {
+  const { slug, id } = params
 
-export default async function Page({ params }: PageProps) {
-  const { id } = await params
-  const post = await fetchPostById(id)
+  let data: any = null
 
-  if (!post) {
-    return <div className="p-8 text-center">404 - Post not found</div>
+  // Fetch depending on slug
+  if (slug === 'posts') {
+    data = await fetchPostById(id)
+  } else if (slug === 'teams') {
+    data = await fetchTeamById(id)
   }
 
+  if (!data) {
+    return <div className="p-8 text-center">404 - Page not found</div>
+  }
+
+  // For posts we have maintitle/subtitle, for teams maybe title/description
+  const title = data.maintitle || data.title
+  const subtitle = data.subtitle
+  const author = data.author
+  const heroImage = data.heroImage || data.image
+  const content = data.content || data.mainDescription
+  const gallery = data.imageGallery || []
+
   return (
-    <article className="p-8 max-w-5xl mx-auto">
-      {/* Title and subtitle */}
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">{post.maintitle}</h1>
-        {post.subtitle && (
-          <h2 className="text-xl text-gray-600 mb-4">{post.subtitle}</h2>
-        )}
-        <p className="text-sm text-gray-500">By {post.author}</p>
+    <article className="py-64 pl-41">
+      <header className="mb-12 grid grid-cols-[1fr_auto] pt-20 items-start gap-6 pr-41">
+        {/* Title + Subtitle */}
+        <div>
+          <h1 className="text-4xl font-bold mb-4 italic">{title}</h1>
+          {subtitle && <p className="text-2xl text-black">{subtitle}</p>}
+        </div>
+
+        {/* Vertical gold line */}
+        <div className="w-0.5 bg-yellow h-full mr-[250px]" />
       </header>
 
       {/* Hero Image */}
-      {post.heroImage?.url && (
-        <div className="relative w-full aspect-video mb-10 rounded-xl overflow-hidden shadow-lg">
+      {heroImage?.url && (
+        <div className="relative w-full aspect-video mb-10 overflow-hidden h-[750px]">
           <Image
-            src={post.heroImage.url}
-            alt={post.heroImage.alt || post.maintitle}
+            src={heroImage.url}
+            alt={heroImage.alt || title}
             fill
-            className="object-cover transition-transform duration-500 hover:scale-105"
+            className="object-cover pr-41"
           />
         </div>
       )}
+      <div className="grid grid-cols-[1fr_auto_200px] gap-6 mb-12 items-start pr-41 min-h-[50vh]">
+        {/* Left: Content */}
+        {content && (
+          <div className="prose prose-lg">
+            <RichText data={content} />
+          </div>
+        )}
 
-      {/* Post content */}
-      <div className="prose prose-lg max-w-none mb-12">
-        <RichText data={post.content} />
+        {/* Middle: Vertical gold line */}
+        <div className="w-0.5 bg-yellow h-full mx-auto" />
+
+        {/* Right: Author */}
+        {author && <p className="text-sm text-black min-w-[250px]">By {author}</p>}
       </div>
 
       {/* Image Gallery */}
-      {post.imageGallery?.length > 0 && (
-        <section>
-          <h3 className="text-2xl font-semibold mb-6">Image Gallery</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {post.imageGallery.map((image: any, index: number) => (
-              <div
-                key={index}
-                className="relative aspect-square overflow-hidden rounded-xl group"
-              >
-                <Image
-                  src={image.url}
-                  alt={image.alt || post.maintitle}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                {/* Overlay like carousel */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-              </div>
-            ))}
-          </div>
+      {gallery.length > 0 && (
+        <section className="mt-16">
+          <h2 className="text-2xl font-bold mb-6">More Images</h2>
+
+          <Carousel className="relative w-full">
+            <CarouselContent>
+              {gallery.map((image: any, index: number) => (
+                <CarouselItem key={index}>
+                  <div className="relative w-full h-full aspect-square z-0">
+                    <Image src={image.url} alt={image.alt || title} fill className="object-cover" />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </section>
       )}
     </article>
