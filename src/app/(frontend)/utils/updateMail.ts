@@ -1,18 +1,19 @@
 export const updateMail = async ({ doc, req }) => {
   // Get the team from the deleted submission
-  const team = doc.submissionData?.find((f) => f.field === 'team')?.value;
-  if (!team) return;
+  const team = doc.submissionData?.find((f) => f.field === 'team')?.value
+  if (!team) return
 
   // Get team config
   const teamConfig = await req.payload.find({
     collection: 'teams',
     where: { title: { equals: team } },
     limit: 1,
-  });
+  })
 
-  const capacity = teamConfig.docs[0]?.capacity || 0;
+  const capacity = teamConfig.docs[0]?.capacity || 0
+  if (!capacity) return
 
-  // Fetch all remaining submissions for this team, sorted by creation date
+  // Fetch all remaining submissions for this team
   const allSubs = await req.payload.find({
     collection: 'form-submissions',
     where: {
@@ -21,18 +22,20 @@ export const updateMail = async ({ doc, req }) => {
     },
     limit: 1000,
     sort: 'createdAt',
-  });
+  })
 
   const teamSubs = allSubs.docs.filter(
-    (s) => s.submissionData?.find((f) => f.field === 'team')?.value === team
-  );
+    (s) => s.submissionData?.find((f) => f.field === 'team')?.value === team,
+  )
 
-  // Check if someone should move from waiting list to main list
-  if (teamSubs.length >= capacity && teamSubs[capacity - 1]) {
-    const newlyAccepted = teamSubs[capacity - 0];
+  // ✅ Move first person from waiting list to main list
+  if (teamSubs.length >= capacity) {
+    const newlyAccepted = teamSubs[capacity - 1]
 
-    const email = newlyAccepted.submissionData?.find((f) => f.field === 'email')?.value;
-    const name = newlyAccepted.submissionData?.find((f) => f.field === 'name')?.value || 'there';
+    if (!newlyAccepted) return
+
+    const email = newlyAccepted.submissionData?.find((f) => f.field === 'email')?.value
+    const name = newlyAccepted.submissionData?.find((f) => f.field === 'name')?.value || 'there'
 
     if (email) {
       await req.payload.sendEmail({
@@ -43,7 +46,7 @@ export const updateMail = async ({ doc, req }) => {
           <p>A spot has opened up and you've been moved from the <strong>waiting list</strong> to the <strong>main list</strong> for the <strong>${team}</strong> team.</p>
           <p>We look forward to seeing you!</p>
         `,
-      });
+      })
     }
   }
-};
+}

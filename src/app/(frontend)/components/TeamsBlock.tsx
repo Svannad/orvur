@@ -6,6 +6,20 @@ import { fetchTeams } from '../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 
+function TeamSkeleton({ height = '700px' }: { height?: string }) {
+  return (
+    <div className={`relative w-full overflow-hidden rounded-md mb-6`} style={{ height }}>
+      <div className="absolute inset-0 bg-accent animate-pulse" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 p-6 z-20">
+        <div className="h-6 w-32 bg-white/30 rounded-md animate-pulse mb-3"></div>
+        <div className="h-4 w-48 bg-white/20 rounded-md animate-pulse"></div>
+      </div>
+      <div className="absolute top-4 right-4 bg-white/30 h-6 w-20 rounded-full animate-pulse" />
+    </div>
+  )
+}
+
 type TeamsProps = {
   maintitle: string
   limit?: number
@@ -13,64 +27,112 @@ type TeamsProps = {
 
 export default function TeamsBlock({ block }: { block: TeamsProps }) {
   const [teams, setTeams] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
   const [hovered, setHovered] = useState<number | null>(null)
 
   useEffect(() => {
-  async function load() {
-    const result = await fetchTeams(block.limit)
-    setTeams(result?.docs || result || [])
-  }
-  load()
-}, [block.limit])
-
+    async function load() {
+      const result = await fetchTeams(block.limit)
+      setTeams(result?.docs || result || [])
+      setLoading(false)
+    }
+    load()
+  }, [block.limit])
 
   return (
-    <section className="px-41 py-32">
-      <div className="flex gap-6 justify-center items-stretch overflow-hidden ">
-        {teams.map((team, index) => {
-          const expanded = hovered === index || (hovered === null && index === 0)
+    <section className="px-8 lg:px-24 2xl:px-41 py-41">
+      {block.maintitle && (
+        <h1 className="text-4xl italic font-bold mb-12">{block.maintitle}</h1>
+      )}
 
-          return (
-            <a
-              key={team.id}
-              href={`/teams/${team.id}`}
-              onMouseEnter={() => setHovered(index)}
-              onMouseLeave={() => setHovered(null)}
-              className={`team-item relative h-[700px] overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                expanded ? 'is-hovered' : ''
-              }`}
-            >
-              {/* Image */}
-              {team.image?.url ? (
-                <Image src={team.image.url} alt={team.title} fill className="object-cover" />
-              ) : (
-                <div className="absolute inset-0 bg-black/50" />
-              )}
+      {/* Mobile Section */}
+      <div className="flex flex-col gap-6 lg:hidden">
+        {loading
+          ? Array.from({ length: block.limit || 3 }).map((_, i) => (
+              <TeamSkeleton key={i} height="400px" />
+            ))
+          : teams.length > 0
+          ? teams.map((team) => (
+              <a
+                key={team.id}
+                href={`/teams/${team.id}`}
+                className="relative h-[250px] overflow-hidden cursor-pointer"
+              >
+                {team.image?.url ? (
+                  <Image src={team.image.url} alt={team.title} fill className="object-cover" />
+                ) : (
+                  <div className="absolute inset-0 bg-black/50" />
+                )}
 
-              {/* gradient */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent z-10"></div>
 
-              {/* content */}
-              <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
-                <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
+                <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
+                  <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
+                  {team.subDescription && (
+                    <div className="text-sm text-white">
+                      <RichText data={team.subDescription} />
+                    </div>
+                  )}
+                </div>
 
-                {/* Only show subDescription when expanded */}
-                {expanded && team.subDescription && (
-                  <div className="text-sm text-white transition-opacity duration-300">
-                    <RichText data={team.subDescription} />
+                {team.status && (
+                  <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm font-semibold tracking-wider">
+                    {team.status}
                   </div>
                 )}
-              </div>
+              </a>
+            ))
+          : !loading && (
+              <div className="w-full text-center py-10 text-gray-500">No teams found.</div>
+            )}
+      </div>
 
-              {/* Status Pill */}
-              {team.status && (
-                <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm">
-                  Application: {team.status}
-                </div>
-              )}
-            </a>
-          )
-        })}
+      {/* Desktop Section */}
+      <div className="hidden lg:flex gap-6 justify-center items-stretch overflow-hidden">
+        {loading
+          ? Array.from({ length: block.limit || 3 }).map((_, i) => <TeamSkeleton key={i} />)
+          : teams.length > 0
+          ? teams.map((team, index) => {
+              const expanded = hovered === index || hovered === null
+
+              return (
+                <a
+                  key={team.id}
+                  href={`/teams/${team.id}`}
+                  onMouseEnter={() => setHovered(index)}
+                  onMouseLeave={() => setHovered(null)}
+                  className={`team-item relative h-[700px] overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
+                    expanded ? 'is-hovered' : ''
+                  }`}
+                >
+                  {team.image?.url ? (
+                    <Image src={team.image.url} alt={team.title} fill className="object-cover" />
+                  ) : (
+                    <div className="absolute inset-0 bg-black/50" />
+                  )}
+
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+
+                  <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
+                    <h3 className="text-xl font-semibold mb-2">{team.title}</h3>
+                    {expanded && team.subDescription && (
+                      <div className="text-sm text-white transition-opacity duration-300">
+                        <RichText data={team.subDescription} />
+                      </div>
+                    )}
+                  </div>
+
+                  {team.status && (
+                    <div className="absolute top-4 right-4 z-30 bg-yellow text-white px-4 py-1 rounded-full text-sm font-semibold tracking-wider">
+                      {team.status}
+                    </div>
+                  )}
+                </a>
+              )
+            })
+          : !loading && (
+              <div className="w-full text-center py-10 text-gray-500">No teams found.</div>
+            )}
       </div>
     </section>
   )

@@ -38,6 +38,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.25",
     "graphql": "^16.8.1",
     "lucide-react": "^0.552.0",
     "next": "15.4.4",
@@ -45,6 +46,7 @@
     "payload": "3.62.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-icons": "^5.5.0",
     "sharp": "0.34.2",
     "tailwind-merge": "^3.3.1"
   },

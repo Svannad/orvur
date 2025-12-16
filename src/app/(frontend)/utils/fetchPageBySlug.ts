@@ -1,5 +1,6 @@
 const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
 
+// utils/fetchPageBySlug.ts
 export async function fetchPageBySlug(slug: string) {
   try {
     const url = `${baseUrl}/api/pages?where[slug][equals]=${slug}`
@@ -9,18 +10,23 @@ export async function fetchPageBySlug(slug: string) {
       cache: 'no-store',
     })
 
-    console.log('Response status:', res.status)
-
+    // ✅ Handle HTTP errors
     if (!res.ok) {
-      console.error('Fetch failed:', res.status, res.statusText)
-      return null
+      throw new Error(`Failed to fetch page "${slug}": ${res.status}`)
     }
 
     const data = await res.json()
-    console.log('Response data:', data)
-    return data.docs?.[0] || null
+
+    // ✅ Validate structure
+    if (!data?.docs || !Array.isArray(data.docs)) {
+      throw new Error('Invalid page response format')
+    }
+
+    return data.docs[0] || null
   } catch (error) {
-    console.error('Fetch error:', error)
+    console.error('fetchPageBySlug error:', error)
+
+    // ✅ Safe fallback so UI never crashes
     return null
   }
 }

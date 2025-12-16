@@ -6,7 +6,7 @@ export default async function Navbar() {
   const nav = await fetchNavigation()
 
   return (
-    <nav className="absolute top-0 left-0 w-full z-50 px-6 py-4">
+    <nav className="absolute top-0 left-0 w-full z-50 px-8 lg:px-24 2xl:px-41 py-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
 
         <Link href="/" className="flex items-center">
