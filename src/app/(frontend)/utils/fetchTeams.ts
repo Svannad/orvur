@@ -11,7 +11,7 @@ export const fetchTeams = async (limit?: number) => {
 }
 
 export const fetchTeamById = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/teams/${id}`, { cache: 'no-store' })
+  const res = await fetch(`${baseUrl}/api/teams/${id}`, { cache: 'no-store' })
   if (!res.ok) return null
   return await res.json()
 }
