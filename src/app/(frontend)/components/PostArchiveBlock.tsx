@@ -7,7 +7,10 @@ import { Page } from '@/payload-types'
 import { serializeLexicalRichText } from '../utils/serializeRichText'
 import { Search } from 'lucide-react'
 
-type PostArchiveProps = Extract<Page['content'][0], { blockType: 'postsArchive' }>
+type PostArchiveProps = {
+  maintitle?: string
+  limit?: number
+}
 
 export default function PostArchiveBlock({ block }: { block: PostArchiveProps }) {
   const [posts, setPosts] = useState<any[]>([])

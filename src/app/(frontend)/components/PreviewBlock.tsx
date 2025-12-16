@@ -6,7 +6,21 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 import { fetchPosts } from '../utils/fetchPosts'
 
-type PreviewProps = Extract<Page['content'][0], { blockType: 'preview' }>
+type PreviewProps = {
+  mode: 'auto' | 'manual'
+  maintitle?: string
+  subtitle?: string
+  description?: any[]
+  image?: {
+    url: string
+    alt?: string
+  }
+  cta?: {
+    text: string
+    link: string
+  }
+  post?: any
+}
 
 export default function PreviewBlock({ block }: { block: PreviewProps }) {
   const [post, setPost] = useState<any>(null)

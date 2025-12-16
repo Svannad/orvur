@@ -6,13 +6,18 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel'
 import { fetchPosts } from '../utils/fetchPosts'
 import { Page } from '@/payload-types'
 
-type PostPreviewProps = Extract<Page['content'][0], { blockType: 'postsPreview' }>
+type PostPreviewProps = {
+  maintitle?: string
+  limit?: number
+  cta?: {
+    text: string
+    link: string
+  }
+}
 
 export default function PostPreviewBlock({ block }: { block: PostPreviewProps }) {
   const [posts, setPosts] = useState<any[]>([])

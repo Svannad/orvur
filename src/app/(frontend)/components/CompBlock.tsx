@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import { Page } from '@/payload-types'
 import { fetchComps } from '../utils/fetchComps'
 
-type CompProps = Extract<Page['content'][0], { blockType: 'compOverview' }>
+type CompProps = {
+  maintitle: string
+  limit?: number
+}
 
 export default function CompBlock({ block }: { block: CompProps }) {
   const [comps, setComps] = useState<any[]>([])

@@ -5,7 +5,10 @@ import { Page } from '@/payload-types'
 import { fetchTeams } from '../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
-type TeamsProps = Extract<Page['content'][0], { blockType: 'teamsOverview' }>
+type TeamsProps = {
+  maintitle: string
+  limit?: number
+}
 
 export default function TeamsBlock({ block }: { block: TeamsProps }) {
   const [teams, setTeams] = useState<any[]>([])

@@ -1,8 +1,20 @@
-import { Page } from '@/payload-types'
+import React from 'react'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
+import type { SerializedEditorState } from 'lexical'
 
-type HeroProps = Extract<Page['content'][0], { blockType: 'hero' }>
+type HeroProps = {
+  maintitle: string
+  subtitle: SerializedEditorState
+  image?: {
+    url: string
+    alt?: string
+  }
+  cta?: {
+    text: string
+    link: string
+  }
+}
 
 export default function HeroBlock({ block }: { block: HeroProps }) {
   return (
