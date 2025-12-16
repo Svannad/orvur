@@ -17,6 +17,10 @@ import FAQ from './collections/FAQ'
 import { Navigation } from './collections/Navigation'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
+// Email adapter and hooks
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { updateMail } from './app/(frontend)/utils/updateMail'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -27,20 +31,55 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+
   globals: [Navigation],
   collections: [Users, Media, Pages, Posts, Competitions, Teams, FAQ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_FROM || 'no-reply@site.com',
+    defaultFromName: 'Ørvur',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
+
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
+
   sharp,
+
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
-    formBuilderPlugin({})
+
+    formBuilderPlugin({
+      formSubmissionOverrides: {
+        fields: [
+          {
+            name: 'status',
+            type: 'select',
+            defaultValue: 'waiting',
+            options: [
+              { label: 'Main List', value: 'main' },
+              { label: 'Waiting List', value: 'waiting' },
+            ],
+          },
+        ],
+        hooks: {
+          afterDelete: [updateMail],
+        },
+      },
+    } as any),
   ],
 })
