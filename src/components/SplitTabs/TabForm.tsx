@@ -7,12 +7,6 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Spinner } from '../ui/spinner'
 
-type FormState = {
-  loading: boolean
-  error: string | null
-  success: boolean
-}
-
 export default function TabForm() {
   const { id } = useParams() as { id: string }
   const [form, setForm] = useState<any>(null)
@@ -23,11 +17,13 @@ export default function TabForm() {
     error: null,
     success: false,
   })
+  const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL || '';
+
 
   useEffect(() => {
     async function loadTeam() {
       try {
-        const res = await fetch(`http://localhost:3000/api/teams/${id}`)
+        const res = await fetch(`${baseUrl}/api/teams/${id}`)
         const data = await res.json()
 
         setTeam(data)
@@ -46,7 +42,7 @@ export default function TabForm() {
   useEffect(() => {
     async function loadForm() {
       try {
-        const res = await fetch('http://localhost:3000/api/forms/6920275f533f3f9f62188022?depth=2')
+        const res = await fetch(`${baseUrl}/api/forms/6920275f533f3f9f62188022?depth=2`)
         const data = await res.json()
         setForm(data)
       } catch (err) {

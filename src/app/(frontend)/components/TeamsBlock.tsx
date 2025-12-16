@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Page } from '@/payload-types'
 import { fetchTeams } from '../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'

@@ -8,7 +8,6 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel'
 import { fetchPosts } from '../utils/fetchPosts'
-import { Page } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 

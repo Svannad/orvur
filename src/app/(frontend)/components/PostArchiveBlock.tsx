@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { fetchPosts } from '../utils/fetchPosts'
-import { Page } from '@/payload-types'
 import { serializeLexicalRichText } from '../utils/serializeRichText'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Search } from 'lucide-react'

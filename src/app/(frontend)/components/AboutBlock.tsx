@@ -1,8 +1,15 @@
 import Image from 'next/image'
-import { Page } from '@/payload-types'
 import SplitTabs from '@/components/SplitTabs/page'
 
-type AboutProps = Extract<Page['content'][0], { blockType: 'about' }>
+type AboutProps = {
+  maintitle: string
+  subtitle?: string
+  heroImage?: {
+    url: string
+    alt?: string
+  }
+  content: any
+}
 
 export default function AboutBlock({ block }: { block: AboutProps }) {
   return (
@@ -23,7 +30,7 @@ export default function AboutBlock({ block }: { block: AboutProps }) {
         <div className="relative w-full aspect-video mb-5 overflow-hidden h-[650px]">
           <Image
             src={block.heroImage.url}
-            alt={block.heroImage.alt || block.title}
+            alt={block.heroImage.alt || block.maintitle}
             fill
             className="object-cover pr-8 lg:pr-24 2xl:pr-41"
           />

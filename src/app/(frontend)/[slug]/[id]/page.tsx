@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import { fetchPostById } from '../../utils/fetchPosts'
 import { fetchTeamById } from '../../utils/fetchTeams'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import SplitTabs from '@/components/SplitTabs/page'
 import ImageGallery from '@/components/ImageGallery'
 
@@ -15,7 +13,6 @@ export default async function Page({ params }: PageProps) {
 
   let data: any = null
 
-  // Fetch depending on slug
   if (slug === 'posts') {
     data = await fetchPostById(id)
   } else if (slug === 'teams') {
@@ -26,7 +23,6 @@ export default async function Page({ params }: PageProps) {
     return <div className="p-8 text-center">404 - Page not found</div>
   }
 
-  // For posts we have maintitle/subtitle, for teams maybe title/description
   const title = data.maintitle || data.title
   const subtitle = data.subtitle
   const author = data.author

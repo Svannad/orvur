@@ -1,5 +1,6 @@
 import { AiFillFacebook } from 'react-icons/ai'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -34,24 +35,24 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-4 w-32">
           <h3 className="font-bold text-xl mb-3">Our Teams</h3>
-          <a
+          <Link
             href="/teams/690c7b5545ec8c60fe7e3533"
             className="hover:italic transition duration-300"
           >
             Adult
-          </a>
-          <a
+          </Link>
+          <Link
             href="/teams/690c7b8345ec8c60fe7e355f"
             className="hover:italic transition duration-300"
           >
             Child
-          </a>
-          <a
+          </Link>
+          <Link
             href="/teams/690c89d545ec8c60fe7e398c"
             className="hover:italic transition duration-300"
           >
             Kadet
-          </a>
+          </Link>
         </div>
       </section>
       <section className='hidden lg:block'>

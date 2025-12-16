@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Page } from '@/payload-types'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { fetchTeams } from '../utils/fetchTeams'
 
-type SubmitProps = Extract<Page['content'][0], { blockType: 'submit' }>
+type SubmitProps = {
+  maintitle?: string
+}
 
 export default function SubmitBlock({ block }: { block: SubmitProps }) {
   const [submissions, setSubmissions] = useState<any[]>([])
