@@ -4,8 +4,12 @@ import { fetchTeamById } from '../../utils/fetchTeams'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
-export default async function Page({ params }: { params: { slug: string; id: string } }) {
-  const { slug, id } = params
+type PageProps = {
+  params: Promise<{ slug: string; id: string }>
+}
+
+export default async function Page({ params }: PageProps) {
+  const { slug, id } = await params
 
   let data: any = null
 
