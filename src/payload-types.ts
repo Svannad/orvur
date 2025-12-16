@@ -69,6 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    pages: Page;
+    posts: Post;
+    competitions: Competition;
+    teams: Team;
+    faq: Faq;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +83,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    competitions: CompetitionsSelect<false> | CompetitionsSelect<true>;
+    teams: TeamsSelect<false> | TeamsSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,8 +96,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    navigation: Navigation;
+  };
+  globalsSelect: {
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -160,6 +174,227 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  slug: string;
+  content?:
+    | (
+        | {
+            maintitle: string;
+            subtitle?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            mode: 'auto' | 'manual';
+            maintitle?: string | null;
+            subtitle?: string | null;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
+            };
+            post?: (string | null) | Post;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'preview';
+          }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'postArchive';
+          }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamsOverview';
+          }
+        | {
+            maintitle: string;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'compOverview';
+          }
+        | {
+            maintitle: string;
+            cta?: {
+              text?: string | null;
+              link?: string | null;
+            };
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'postPreview';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  slug: string;
+  maintitle: string;
+  subtitle: string;
+  heroImage: string | Media;
+  author: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  imageGallery?: (string | Media)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "competitions".
+ */
+export interface Competition {
+  id: string;
+  title: string;
+  distance: string;
+  date: string;
+  location: string;
+  time: string;
+  teams?: (string | Team)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams".
+ */
+export interface Team {
+  id: string;
+  image: string | Media;
+  title: string;
+  mainDescription: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  subDescription: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  capacity: number;
+  prize: number;
+  expirationDate: string;
+  status?: ('open' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  link?: {
+    text?: string | null;
+    link?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -189,6 +424,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'competitions';
+        value: string | Competition;
+      } | null)
+    | ({
+        relationTo: 'teams';
+        value: string | Team;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: string | Faq;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -274,6 +529,152 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              maintitle?: T;
+              subtitle?: T;
+              image?: T;
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        preview?:
+          | T
+          | {
+              mode?: T;
+              maintitle?: T;
+              subtitle?: T;
+              description?: T;
+              image?: T;
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
+              post?: T;
+              id?: T;
+              blockName?: T;
+            };
+        postArchive?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamsOverview?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        compOverview?:
+          | T
+          | {
+              maintitle?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        postPreview?:
+          | T
+          | {
+              maintitle?: T;
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  slug?: T;
+  maintitle?: T;
+  subtitle?: T;
+  heroImage?: T;
+  author?: T;
+  content?: T;
+  imageGallery?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "competitions_select".
+ */
+export interface CompetitionsSelect<T extends boolean = true> {
+  title?: T;
+  distance?: T;
+  date?: T;
+  location?: T;
+  time?: T;
+  teams?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teams_select".
+ */
+export interface TeamsSelect<T extends boolean = true> {
+  image?: T;
+  title?: T;
+  mainDescription?: T;
+  subDescription?: T;
+  capacity?: T;
+  prize?: T;
+  expirationDate?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  link?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -311,6 +712,36 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: string;
+  navItems: {
+    label: string;
+    page: string | Page;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
