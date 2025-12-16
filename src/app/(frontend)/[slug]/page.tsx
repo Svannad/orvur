@@ -1,8 +1,9 @@
+import { PageProps } from ".next/types/app/(frontend)/layout"
 import RenderBlocks from "../components/RenderBlocks"
 import { fetchPageBySlug } from "../utils/fetchPageBySlug"
 
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: PageProps["params"] }) {
   const page = await fetchPageBySlug(params.slug)
 
   if (!page) {
