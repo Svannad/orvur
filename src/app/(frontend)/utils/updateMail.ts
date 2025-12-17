@@ -15,7 +15,6 @@ export const updateMail: CollectionAfterDeleteHook = async ({ doc, req }) => {
   const capacity = teamConfig.docs[0]?.capacity || 0
   if (!capacity) return
 
-  // Fetch all remaining submissions for this team
   const allSubs = await req.payload.find({
     collection: 'form-submissions',
     where: {
@@ -30,8 +29,7 @@ export const updateMail: CollectionAfterDeleteHook = async ({ doc, req }) => {
     (s) => s.submissionData?.find((f) => f.field === 'team')?.value === team,
   )
 
-  // ✅ Move first person from waiting list to main list
-  if (teamSubs.length >= capacity) {
+  if (teamSubs.length === capacity) {
     const newlyAccepted = teamSubs[capacity - 1]
 
     if (!newlyAccepted) return
