@@ -1,6 +1,6 @@
-import { CollectionAfterChangeHook } from "payload"
+import { CollectionAfterDeleteHook } from "payload"
 
-export const updateMail: CollectionAfterChangeHook = async ({ doc, req }) => {
+export const updateMail: CollectionAfterDeleteHook = async ({ doc, req }) => {
   // Get the team from the deleted submission
   const team = doc.submissionData?.find((f: any) => f.field === 'team')?.value
   if (!team) return
