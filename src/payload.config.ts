@@ -16,6 +16,7 @@ import { Teams } from './collections/Teams'
 import FAQ from './collections/FAQ'
 import { Navigation } from './collections/Navigation'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 // Email adapter and hooks
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
@@ -84,5 +85,14 @@ plugins: [
         },
       },
     } as any),
+    uploadthingStorage({
+      collections: {
+        media: true,
+      },
+      options: {
+        token: process.env.UPLOADTHING_TOKEN,
+        acl: 'public-read',
+      },
+    }),
   ],
 })
