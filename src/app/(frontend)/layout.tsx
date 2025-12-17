@@ -4,8 +4,9 @@ import Footer from './components/Footer'
 import RouteLoader from './components/RouteLoader'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'A Archery Club Website',
+  title: 'Ørvur Archery',
+  icon: '/favicon.ico',
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {
